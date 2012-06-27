@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,17 +14,25 @@ namespace MetroTerminal
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private BackgroundWorker fileDumpWorker = new BackgroundWorker();
+        private BackgroundWorker manualSendWorker = new BackgroundWorker();
+        private BackgroundWorker receiveWorker = new BackgroundWorker();
+
         private BrushConverter bc = new BrushConverter();
         private FontFamilyConverter ffc = new FontFamilyConverter();
         private FontSizeConverter fsc = new FontSizeConverter();
 
         private SerialPort port = new SerialPort();
 
+        private RowDefinition tabRow;
+
         private Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
         public MainWindow()
         {
             InitializeComponent();
+            addToList("Application (v" + version.ToString() + ") opened");
+            AppWindow.Title += " " +version.ToString(); 
             // THESE LINES MUST BE DELETED
             for (int i = 0; i < 100; i++)
             {
@@ -35,6 +44,26 @@ namespace MetroTerminal
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
             loadSettings();
+
+            
+        }
+
+        void prepareThreads()
+        {
+            fileDumpWorker.WorkerReportsProgress = true;
+            fileDumpWorker.WorkerSupportsCancellation = true;
+            fileDumpWorker.DoWork += new DoWorkEventHandler(fileDumpWorker_DoWork);
+            fileDumpWorker.ProgressChanged += new ProgressChangedEventHandler(fileDumpWorker_ProgressChanged);
+            fileDumpWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileDumpWorker_RunWorkerCompleted);
+
+            manualSendWorker.WorkerReportsProgress = true;
+            manualSendWorker.WorkerSupportsCancellation = true;
+            manualSendWorker.DoWork += new DoWorkEventHandler(manualSendWorker_DoWork);
+            manualSendWorker.ProgressChanged += new ProgressChangedEventHandler(manualSendWorker_ProgressChanged);
+            manualSendWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(manualSendWorker_RunWorkerCompleted);
+
+            receiveWorker.WorkerSupportsCancellation = true;
+            receiveWorker.DoWork += new DoWorkEventHandler(receiveWorker_DoWork);
         }
         private void colorizeAll()
         {
@@ -94,6 +123,50 @@ namespace MetroTerminal
             parityComboBox.SelectedIndex = TerminalSettings.Default.parityIndex;
             stopBitsComboBox.SelectedIndex = TerminalSettings.Default.stopBitsIndex;
         }
+        private void savePortSettings(int baudRate, int baudRateIndex, int stopBitIndex, int parityIndex, int dataBitIndex)
+        {
+            bool save = false;
+            if (stopBitIndex != TerminalSettings.Default.stopBitsIndex)
+            {
+                TerminalSettings.Default.stopBitsIndex = stopBitIndex;
+                save = true;
+            }
+            if (parityIndex != TerminalSettings.Default.parityIndex)
+            {
+                save = true;
+                TerminalSettings.Default.parityIndex = parityIndex;
+            }
+            if (dataBitIndex != TerminalSettings.Default.dataBitsIndex)
+            {
+                save = true;
+                TerminalSettings.Default.dataBitsIndex = dataBitIndex;
+            }
+            if (baudRateIndex != TerminalSettings.Default.lastSelectedBaudRateIndex)
+            {
+                save = true;
+                TerminalSettings.Default.lastSelectedBaudRateIndex = baudRateIndex; 
+            }
+            if (!TerminalSettings.Default.baudRates.Contains(baudRate.ToString()))
+            {
+                save = true;
+                TerminalSettings.Default.baudRates.Add(baudRate.ToString());
+                TerminalSettings.Default.lastSelectedBaudRateIndex = TerminalSettings.Default.baudRates.Count -1; 
+            }
+            if (save)
+            {
+                TerminalSettings.Default.Save();
+            }
+        }
+        private void comPortTabEnableDisable()
+        {
+            portComboBox.IsEnabled = !portComboBox.IsEnabled;
+            portLabel.IsEnabled = !portLabel.IsEnabled;
+            baudRateLabel.IsEnabled = !baudRateLabel.IsEnabled;
+            baudRateComboBox.IsEnabled = !baudRateComboBox.IsEnabled;
+            parityGroupBox.IsEnabled = !parityGroupBox.IsEnabled;
+            stopBitsGroupBox.IsEnabled = !stopBitsGroupBox.IsEnabled;
+            dataBitsGroupBox.IsEnabled = !dataBitsGroupBox.IsEnabled;
+        }
         private bool IsItAPositiveNumber(String numberString, out int number)
         {
             try
@@ -132,9 +205,16 @@ namespace MetroTerminal
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            if (fileDumpWorker.IsBusy || receiveWorker.IsBusy || manualSendWorker.IsBusy)
+            {
+                showErrorMessage("Post is busy!");
+                return;
+            }
             if (port.IsOpen)
             {
                 port.Close();
+                openPortButton.Content = "Open Port";
+                comPortTabEnableDisable();
                 return;
             }
             try
@@ -217,6 +297,16 @@ namespace MetroTerminal
                 port.PortName = portComboBox.SelectedItem.ToString();
 
                 port.Open();
+
+                addToList(port.PortName + " is open!");
+
+                openPortButton.Content = "Close Port";
+
+                tabControl1.SelectedIndex = 1;
+
+                savePortSettings(port.BaudRate, baudRateComboBox.SelectedIndex, stopBitsComboBox.SelectedIndex, parityComboBox.SelectedIndex,dataBitsComboBox.SelectedIndex);
+
+                comPortTabEnableDisable();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -231,6 +321,10 @@ namespace MetroTerminal
         {
             terminalTextBox.Text = "";
         }
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            fileDumpWorker.RunWorkerAsync();
+        }
         private void showMessage(String message, String title)
         {
             MessageBox.Show(message, title);
@@ -239,7 +333,70 @@ namespace MetroTerminal
         {
             MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        void fileDumpWorker_DoWork(object s, DoWorkEventArgs args)
+        {
+            int i = 0;
+            while (true)
+            {
+                if (i == 100)
+                {
+                    i = 0;
+                }
+                fileDumpWorker.ReportProgress(i++);
+                System.Threading.Thread.Sleep(100);
+            }
+            
+        }
+        void manualSendWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
+        void manualSendWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            dumpFileProgressBar.Value = e.ProgressPercentage;
+        }
+
+        void manualSendWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void updateWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabRow == null)
+            {
+                tabControl1.Visibility = System.Windows.Visibility.Hidden;
+                tabRow = grid1.RowDefinitions[1];
+                grid1.RowDefinitions.RemoveAt(1);
+                //updateWindowButton.Content.ToString();
+                rectangle1.Visibility = System.Windows.Visibility.Collapsed;
+                rectangle2.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                tabControl1.Visibility = System.Windows.Visibility.Visible;
+                grid1.RowDefinitions.Add(tabRow);
+                tabRow = null;
+                rectangle1.Visibility = System.Windows.Visibility.Visible;
+                rectangle2.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
 
 
     }

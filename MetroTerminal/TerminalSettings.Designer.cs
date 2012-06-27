@@ -37,7 +37,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Lime")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF65B5E3")]
         public string terminalFontColor {
             get {
                 return ((string)(this["terminalFontColor"]));

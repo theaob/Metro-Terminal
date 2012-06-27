@@ -6,7 +6,7 @@
       <Value Profile="(Default)">Black</Value>
     </Setting>
     <Setting Name="terminalFontColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Lime</Value>
+      <Value Profile="(Default)">#FF65B5E3</Value>
     </Setting>
     <Setting Name="terminalFontFamily" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sagoe UI</Value>
