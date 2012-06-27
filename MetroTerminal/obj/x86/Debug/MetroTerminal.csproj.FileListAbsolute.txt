@@ -15,3 +15,4 @@ c:\users\test pc1\documents\visual studio 2010\Projects\MetroTerminal\MetroTermi
 c:\users\test pc1\documents\visual studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.pdb
 c:\users\test pc1\documents\visual studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\SettingsWindow.baml
 c:\users\test pc1\documents\visual studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\SettingsWindow.g.cs
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\Resources\Icons.baml
