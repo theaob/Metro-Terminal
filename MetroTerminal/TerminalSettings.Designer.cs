@@ -13,13 +13,101 @@ namespace MetroTerminal {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "10.0.0.0")]
-    internal sealed partial class TerminalSettings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class TerminalSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static TerminalSettings defaultInstance = ((TerminalSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new TerminalSettings())));
         
         public static TerminalSettings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public string terminalBackColor {
+            get {
+                return ((string)(this["terminalBackColor"]));
+            }
+            set {
+                this["terminalBackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lime")]
+        public string terminalFontColor {
+            get {
+                return ((string)(this["terminalFontColor"]));
+            }
+            set {
+                this["terminalFontColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Verdana")]
+        public string terminalFontFamily {
+            get {
+                return ((string)(this["terminalFontFamily"]));
+            }
+            set {
+                this["terminalFontFamily"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8.25")]
+        public double terminalFontSize {
+            get {
+                return ((double)(this["terminalFontSize"]));
+            }
+            set {
+                this["terminalFontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>115200</string>
+  <string>57600</string>
+  <string>38400</string>
+  <string>19200</string>
+  <string>9600</string>
+  <string>1200</string>
+  <string>300</string>
+  <string>921600</string>
+  <string>460800</string>
+  <string>230400</string>
+  <string>4800</string>
+  <string>2400</string>
+  <string>150</string>
+  <string>110</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection baudRates {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["baudRates"]));
+            }
+            set {
+                this["baudRates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lastSelectedBaudRateIndex {
+            get {
+                return ((int)(this["lastSelectedBaudRateIndex"]));
+            }
+            set {
+                this["lastSelectedBaudRateIndex"] = value;
             }
         }
     }
