@@ -78,7 +78,7 @@
                     </GroupBox>
                     <WrapPanel Grid.Row="1">
                     <GroupBox Height="50" Width="100" Header="Parity">
-                            <ComboBox Height="23" ItemsSource="{Binding}">
+                            <ComboBox Height="23" ItemsSource="{Binding}" Name="parityComboBox">
                                 <ComboBoxItem Content="None" />
                                 <ComboBoxItem Content="Odd" />
                                 <ComboBoxItem Content="Even" />
@@ -87,7 +87,7 @@
                             </ComboBox>
                     </GroupBox>
                     <GroupBox Height="50" Width="100" Header="Data Bits">
-                            <ComboBox Height="23" ItemsSource="{Binding}">
+                            <ComboBox Height="23" ItemsSource="{Binding}" Name="dataBitsComboBox">
                                 <ComboBoxItem Content="8 bits" />
                                 <ComboBoxItem Content="7 bits" />
                                 <ComboBoxItem Content="6 bits" />
@@ -95,7 +95,7 @@
                             </ComboBox>
                         </GroupBox>
                     <GroupBox Height="50" Width="100" Header="Stop Bits">
-                            <ComboBox Height="23" ItemsSource="{Binding}">
+                            <ComboBox Height="23" ItemsSource="{Binding}" Name="stopBitsComboBox">
                                 <ComboBoxItem Content="None" />
                                 <ComboBoxItem Content="1 bit" />
                                 <ComboBoxItem Content="1.5 bits" />

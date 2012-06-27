@@ -29,14 +29,13 @@ namespace MetroTerminal
             colorizeAll();
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
+            loadSettings();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void colorizeAll()
         {
-            SettingsWindow sw = new SettingsWindow();
-            sw.ShowDialog();
-            //MessageBox.Show("Settings!");*/
+            colorizeTerminalBox();
         }
+        
 
         private void updateAvailable()
         {
@@ -50,10 +49,7 @@ namespace MetroTerminal
             //textBlock1.Inlines.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n");
             //listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
-        private void colorizeAll()
-        {
-            colorizeTerminalBox();
-        }
+        
         private void colorizeTerminalBox()
         {
             terminalTextBox.Background = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalBackColor);
@@ -61,9 +57,6 @@ namespace MetroTerminal
             terminalTextBox.FontFamily = (FontFamily) ffc.ConvertFrom(TerminalSettings.Default.terminalFontFamily);
             terminalTextBox.FontSize = TerminalSettings.Default.terminalFontSize;
         }
-
-
-
         private void loadPortsIntoBox(ComboBox box)
         {
             SerialPort sp = new SerialPort();
@@ -92,9 +85,21 @@ namespace MetroTerminal
             }
             baudRateComboBox.SelectedIndex = TerminalSettings.Default.lastSelectedBaudRateIndex;
         }
+        private void loadSettings()
+        {
+            dataBitsComboBox.SelectedIndex = TerminalSettings.Default.dataBitsIndex;
+            parityComboBox.SelectedIndex = TerminalSettings.Default.parityIndex;
+            stopBitsComboBox.SelectedIndex = TerminalSettings.Default.stopBitsIndex;
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow sw = new SettingsWindow();
+            sw.ShowDialog();
+        }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             loadPortsIntoBox(portComboBox);
         }
+
     }
 }

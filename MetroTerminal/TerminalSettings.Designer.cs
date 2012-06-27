@@ -110,5 +110,41 @@ namespace MetroTerminal {
                 this["lastSelectedBaudRateIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int dataBitsIndex {
+            get {
+                return ((int)(this["dataBitsIndex"]));
+            }
+            set {
+                this["dataBitsIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int stopBitsIndex {
+            get {
+                return ((int)(this["stopBitsIndex"]));
+            }
+            set {
+                this["stopBitsIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int parityIndex {
+            get {
+                return ((int)(this["parityIndex"]));
+            }
+            set {
+                this["parityIndex"] = value;
+            }
+        }
     }
 }
