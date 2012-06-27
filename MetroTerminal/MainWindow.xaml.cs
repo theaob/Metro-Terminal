@@ -30,7 +30,12 @@ namespace MetroTerminal
         {
             SettingsWindow sw = new SettingsWindow();
             sw.ShowDialog();
-            //MessageBox.Show("Settings!");
+            //MessageBox.Show("Settings!");*/
+        }
+
+        private void updateAvailable()
+        {
+            updateWindowButton.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

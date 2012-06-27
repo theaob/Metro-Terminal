@@ -18,6 +18,19 @@
     </Window.Resources>
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
+            <Button Visibility="Hidden" Name="updateWindowButton">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_disk_download}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="update available" />
+                </StackPanel>
+            </Button>
             <Button Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20">
