@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="D2S" Height="407" Width="354" Icon="/MetroTerminal;component/Images/icon_128%20%281%29.ico" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="D2S" Name="AppWindow" Height="407" Width="354" Icon="/MetroTerminal;component/Images/icon_128%20%281%29.ico" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,7 +11,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -25,7 +25,7 @@
                             <SolidColorBrush x:Key="BlackBrush" Color="White" />
                         </Rectangle.Resources>
                         <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_disk_download}" />
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock Text="update available" />
@@ -45,16 +45,21 @@
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
-    <Grid>
-        <ListBox Name="listBox1" UseLayoutRounding="True" IsEnabled="True" VerticalAlignment="Top" BorderThickness="5" Height="200" />
-        <TabControl Name="tabControl1" Margin="-2,206,0,0">
+    <Grid Name="grid1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200*" />
+            <RowDefinition Height="168" />
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch"/>
+        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch">
             <TabItem Header="COM Port" Name="tabItem1">
-                <Grid>
-                    <Button Content="Button" Height="23" HorizontalAlignment="Stretch" Margin="254,85,0,0" Name="button1" VerticalAlignment="Stretch" Width="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ClipToBounds="True"/>
+                <Grid Name="portGrid">
+                    
+                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Send" />
-            <TabItem Header="Receive"></TabItem>
+            <TabItem Header="Send" Name="tabItem2"/>
+            <TabItem Header="Receive" Name="tabItem3"/>
         </TabControl>
     </Grid>
 </Controls:MetroWindow >

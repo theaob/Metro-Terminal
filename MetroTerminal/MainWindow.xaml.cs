@@ -21,9 +21,15 @@ namespace MetroTerminal
     public partial class MainWindow : MetroWindow
     {
 
+        private Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
         public MainWindow()
         {
             InitializeComponent();
+            for (int i = 0; i < 100; i++)
+            {
+                addToList(version.ToString());
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -36,6 +42,13 @@ namespace MetroTerminal
         private void updateAvailable()
         {
             updateWindowButton.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void addToList(String text)
+        {
+            //textBox1.Text += DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n";
+            //textBlock1.Inlines.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n");
+            //listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
     }
 }
