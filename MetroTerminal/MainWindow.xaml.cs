@@ -46,7 +46,8 @@ namespace MetroTerminal
 
         private void addToList(String text)
         {
-            //textBox1.Text += DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n";
+
+            terminalTextBox.Text += DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n";
             //textBlock1.Inlines.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n");
             //listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
