@@ -25,10 +25,9 @@
                             <SolidColorBrush x:Key="BlackBrush" Color="White" />
                         </Rectangle.Resources>
                         <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_warning}" />
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_download}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Text="update available" />
                 </StackPanel>
             </Button>
             <Button Click="Button_Click">
@@ -43,6 +42,7 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
+            <Button Click="Button_Click_3" Content="clear"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
     <Grid Name="grid1">
@@ -66,14 +66,14 @@
                             </Grid.RowDefinitions>
                             <WrapPanel Margin="5,5,0,0" Grid.Row="0">
                                 <Label Content="Baud Rate:"/>
-                                <ComboBox Name="baudRateComboBox" Margin="10,0,0,0" Width="120"></ComboBox>
+                                <ComboBox Name="baudRateComboBox" Margin="10,0,0,0" Width="120" IsEditable="True"></ComboBox>
                             </WrapPanel>
                             <Button Grid.Row="0" Height="23" Width="75" HorizontalAlignment="Right" Click="Button_Click_1">Scan Ports</Button>
                             <WrapPanel Margin="5,0,0,0" Grid.Row="1">
                                 <Label Content="Port:"/>
                                 <ComboBox Name="portComboBox" Margin="41,0,0,0"  Width="120"></ComboBox>
                             </WrapPanel>
-                            <Button Grid.Row="1" Height="23" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top">Open Port</Button>
+                            <Button Grid.Row="1" Height="23" Width="75" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Button_Click_2">Open Port</Button>
                         </Grid>
                     </GroupBox>
                     <WrapPanel Grid.Row="1">

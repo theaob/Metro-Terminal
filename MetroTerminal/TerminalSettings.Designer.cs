@@ -49,7 +49,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Verdana")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Sagoe UI")]
         public string terminalFontFamily {
             get {
                 return ((string)(this["terminalFontFamily"]));
@@ -61,7 +61,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8.25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public double terminalFontSize {
             get {
                 return ((double)(this["terminalFontSize"]));

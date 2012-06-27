@@ -9,10 +9,10 @@
       <Value Profile="(Default)">Lime</Value>
     </Setting>
     <Setting Name="terminalFontFamily" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Verdana</Value>
+      <Value Profile="(Default)">Sagoe UI</Value>
     </Setting>
     <Setting Name="terminalFontSize" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8.25</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="baudRates" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;

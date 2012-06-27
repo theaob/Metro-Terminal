@@ -17,15 +17,20 @@ namespace MetroTerminal
         private FontFamilyConverter ffc = new FontFamilyConverter();
         private FontSizeConverter fsc = new FontSizeConverter();
 
+        private SerialPort port = new SerialPort();
+
         private Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
         public MainWindow()
         {
             InitializeComponent();
+            // THESE LINES MUST BE DELETED
             for (int i = 0; i < 100; i++)
             {
                 addToList(version.ToString());
             }
+            updateAvailable();
+            //
             colorizeAll();
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
@@ -41,7 +46,6 @@ namespace MetroTerminal
         {
             updateWindowButton.Visibility = System.Windows.Visibility.Visible;
         }
-
         private void addToList(String text)
         {
 
@@ -49,7 +53,6 @@ namespace MetroTerminal
             //textBlock1.Inlines.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n");
             //listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
-        
         private void colorizeTerminalBox()
         {
             terminalTextBox.Background = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalBackColor);
@@ -91,6 +94,33 @@ namespace MetroTerminal
             parityComboBox.SelectedIndex = TerminalSettings.Default.parityIndex;
             stopBitsComboBox.SelectedIndex = TerminalSettings.Default.stopBitsIndex;
         }
+        private bool IsItAPositiveNumber(String numberString, out int number)
+        {
+            try
+            {
+                number = int.Parse(numberString, null);
+                if (number <= 0)
+                {
+                    throw new FormatException();
+                }
+            }
+            catch (FormatException)
+            {
+                number = 0;
+                return false;
+            }
+            catch (OverflowException)
+            {
+                number = 0;
+                return false;
+            }
+            catch (ArgumentNullException)
+            {
+                number = 0;
+                return false;
+            }
+            return true;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow sw = new SettingsWindow();
@@ -100,6 +130,117 @@ namespace MetroTerminal
         {
             loadPortsIntoBox(portComboBox);
         }
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (port.IsOpen)
+            {
+                port.Close();
+                return;
+            }
+            try
+            {
+                int baudRate = 9600;
+                if (IsItAPositiveNumber(baudRateComboBox.Text, out baudRate))
+                {
+                    port.BaudRate = baudRate;
+                }
+                else
+                {
+                    showMessage("Please enter a valid baud rate", "Error");
+                }
+
+                switch (parityComboBox.SelectedItem.ToString())
+                {
+                    case "None":
+                        {
+                            port.Parity = Parity.None;
+                            break;
+                        }
+                    case "Odd":
+                        {
+                            port.Parity = Parity.Odd;
+                            break;
+                        }
+                    case "Even":
+                        {
+                            port.Parity = Parity.Even;
+                            break;
+                        }
+                    case "Mark":
+                        {
+                            port.Parity = Parity.Mark;
+                            break;
+                        }
+                    case "Space":
+                        {
+                            port.Parity = Parity.Space;
+                            break;
+                        }
+                }
+
+                switch (dataBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.DataBits = 8;
+                            break;
+                        }
+                    case 1:
+                        {
+                            port.DataBits = 7;
+                            break;
+                        }
+                    case 2:
+                        {
+                            port.DataBits = 6;
+                            break;
+                        }
+                    case 3:
+                        {
+                            port.DataBits = 5;
+                            break;
+                        }
+                }
+
+                switch (stopBitsComboBox.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            port.StopBits = StopBits.None;
+                            break;
+                        }
+                    case 1: { port.StopBits = StopBits.One; break; }
+                    case 2: { port.StopBits = StopBits.OnePointFive; break; }
+                    case 3: { port.StopBits = StopBits.Two; break; }
+                }
+
+                port.PortName = portComboBox.SelectedItem.ToString();
+
+                port.Open();
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                showErrorMessage("Please select valid options for " + port.PortName);
+            }
+            catch (Exception ex)
+            {
+                showMessage(ex.GetType().ToString(), "Error");
+            }
+        }
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            terminalTextBox.Text = "";
+        }
+        private void showMessage(String message, String title)
+        {
+            MessageBox.Show(message, title);
+        }
+        private void showErrorMessage(String message)
+        {
+            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+
 
     }
 }
