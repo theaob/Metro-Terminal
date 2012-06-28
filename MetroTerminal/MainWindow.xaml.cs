@@ -522,6 +522,34 @@ namespace MetroTerminal
             }
 
         }
+        private byte[] getCharArray(String data)
+        {
+            Queue<byte> ll = new Queue<byte>();
+            String[] every = data.Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries);
+            foreach (String a in every) 
+            {
+                //int charDecimal = 0;
+                try
+                {
+                    ll.Enqueue(byte.Parse(a));
+                    //ll.Push(byte.Parse(a));
+                }
+                catch (System.OverflowException)
+                {
+                }
+                catch (System.FormatException)
+                {
+                }
+            }
+            byte[] array = new byte[ll.Count];
+            int llCount = ll.Count;
+            for (int i = 0; i < llCount; i++ )
+            {
+                array[i] = ll.Dequeue();
+            }
+            //44 55 87 255 256 99 0 25
+            return array;
+        }
         private void showMessage(String message, String title)
         {
             MessageBox.Show(message, title);
@@ -572,19 +600,44 @@ namespace MetroTerminal
         }
         void manualSendWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            String sendThis = e.Argument.ToString();
-            int progress = 1;
-            for (int i = 0; i < manualRepeatCount; i++)
+            if (e.Argument.GetType().ToString() == "System.String")
             {
-                if (manualSendWorker.CancellationPending == true)
+                String sendThis = e.Argument.ToString();
+                int progress = 1;
+                for (int i = 0; i < manualRepeatCount; i++)
                 {
-                    e.Cancel = true;
-                    return;
+                    if (manualSendWorker.CancellationPending == true)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    port.Write(sendThis);
+                    addToListSecure(sendThis.Trim());
+                    manualSendWorker.ReportProgress(progress++);
                 }
-                port.Write(sendThis);
-                addToListSecure(sendThis.Trim());
-                manualSendWorker.ReportProgress(progress++);
             }
+            else
+            {
+                byte[] sendThis = (byte[])e.Argument;
+                string toSend = "";
+                foreach (byte a in sendThis)
+                {
+                    toSend += a.ToString();
+                }
+                int progress = 1;
+                for (int i = 0; i < manualRepeatCount; i++)
+                {
+                    if (manualSendWorker.CancellationPending == true)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    port.Write(sendThis, 0, sendThis.Length);
+                    addToListSecure(toSend);
+                    manualSendWorker.ReportProgress(progress++);
+                }
+            }
+
         }
         void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -702,6 +755,7 @@ namespace MetroTerminal
         {
             if (String.IsNullOrWhiteSpace(manualRepeat.Text) || String.IsNullOrEmpty(manualRepeat.Text))
             {
+                manualRepeatCount = 1;
                 manualRepeat.Text = "Repeat";
             }
             else if (!IsItAPositiveNumber(manualRepeat.Text, out manualRepeatCount))
@@ -750,14 +804,32 @@ namespace MetroTerminal
                 return;
             }
             String sendThis = manualDataTextBox.Text;
-            if (sendThis.Length < 1 || sendThis == null)
+            if (sendThis.Length < 1 || sendThis == null || sendThis == "Enter Data Here")
             {
                 return;
             }
 
             if (manualSendASCII.IsChecked == true)
             {
+                byte[] asciiChars = getCharArray(manualDataTextBox.Text);
+                if (asciiChars.Length < 1)
+                {
+                    return;
+                }
+                if (!manualSendWorker.IsBusy)
+                {
+                    dumpFileProgressBar.Value = 0;
+                    manualSendWorker.RunWorkerAsync(asciiChars);
+                    manualSendButton.Content = "Cancel";
+                    dumpFileGroupBox.IsEnabled = false;
 
+                }
+                else
+                {
+                    manualSendWorker.CancelAsync();
+                    manualSendButton.Content = "Send";
+                    dumpFileGroupBox.IsEnabled = true;
+                }
             }
             else
             {
