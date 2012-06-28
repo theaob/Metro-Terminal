@@ -24,6 +24,7 @@ namespace MetroTerminal
         private FontSizeConverter fsc = new FontSizeConverter();
 
         private SerialPort port = new SerialPort();
+        private SerialPort portReceive = new SerialPort();
 
         private RowDefinition tabRow;
 
@@ -534,6 +535,22 @@ namespace MetroTerminal
             {
                 manualRepeat.Text = "";
             }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            newPortGroupBox.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void receiveOtherPort_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (portReceive.IsOpen)
+            {
+                receiveOtherPort.IsChecked = true;
+                showMessage("You need to close the port first!", "Data Receive");
+                return;
+            }
+            newPortGroupBox.Visibility = System.Windows.Visibility.Hidden;
         }
     }
 }

@@ -194,9 +194,9 @@
                         <ColumnDefinition Width="90"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <GroupBox Header="Recieve As" Grid.Column="0" Grid.Row="0">
+                    <GroupBox Header="Recieve As" Grid.Column="0" Grid.Row="0" Name="receiveAsGroupBox">
                         <StackPanel>
-                            <RadioButton>String Line</RadioButton>
+                            <RadioButton IsChecked="True">String Line</RadioButton>
                             <RadioButton>One Char</RadioButton>
                             <RadioButton>One Byte</RadioButton>
                             <RadioButton>Char Array</RadioButton>
@@ -208,9 +208,9 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                        <CheckBox>Receieve From a Separate Port</CheckBox>
+                        <CheckBox Margin="2,0,0,0" Checked="CheckBox_Checked" Name="receiveOtherPort" Unchecked="receiveOtherPort_Unchecked">Receieve From a Separate Port</CheckBox>
                         </StackPanel>
-                        <GroupBox Grid.Row="1" Header="Open A New Port">
+                        <GroupBox Grid.Row="1" Header="Open A New Port" Name="newPortGroupBox" Visibility="Hidden">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
