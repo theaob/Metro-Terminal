@@ -16,8 +16,11 @@ namespace MetroTerminal
     public partial class MainWindow : MetroWindow
     {
         private BackgroundWorker fileDumpWorker = new BackgroundWorker();
+        private BackgroundWorker fileDumpByteArrayWorker = new BackgroundWorker();
         private BackgroundWorker manualSendWorker = new BackgroundWorker();
         private BackgroundWorker receiveWorker = new BackgroundWorker();
+
+        private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
         private BrushConverter bc = new BrushConverter();
         private FontFamilyConverter ffc = new FontFamilyConverter();
@@ -27,6 +30,8 @@ namespace MetroTerminal
         private SerialPort portReceive = new SerialPort();
 
         private RowDefinition tabRow;
+
+        private String addEOL = "";
 
         private Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -45,6 +50,7 @@ namespace MetroTerminal
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
             loadSettings();
+            prepareThreads();
         }
         void prepareThreads()
         {
@@ -53,6 +59,12 @@ namespace MetroTerminal
             fileDumpWorker.DoWork += new DoWorkEventHandler(fileDumpWorker_DoWork);
             fileDumpWorker.ProgressChanged += new ProgressChangedEventHandler(fileDumpWorker_ProgressChanged);
             fileDumpWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileDumpWorker_RunWorkerCompleted);
+
+            fileDumpByteArrayWorker.WorkerReportsProgress = true;
+            fileDumpByteArrayWorker.WorkerSupportsCancellation = true;
+            fileDumpByteArrayWorker.DoWork += new DoWorkEventHandler(fileDumpByteArrayWorker_DoWork);
+            fileDumpByteArrayWorker.ProgressChanged += new ProgressChangedEventHandler(fileDumpByteArrayWorker_ProgressChanged);
+            fileDumpByteArrayWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileDumpByteArrayWorker_RunWorkerCompleted);
 
             manualSendWorker.WorkerReportsProgress = true;
             manualSendWorker.WorkerSupportsCancellation = true;
@@ -63,16 +75,68 @@ namespace MetroTerminal
             receiveWorker.WorkerSupportsCancellation = true;
             receiveWorker.DoWork += new DoWorkEventHandler(receiveWorker_DoWork);
         }
+
+        void fileDumpByteArrayWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            fileDumpWorker_RunWorkerCompleted(sender, e);
+        }
+
+        void fileDumpByteArrayWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            dumpFileProgressBar.Value = (int)(((double)e.ProgressPercentage / fileLines.Count) * 100);
+        }
+
+        void fileDumpByteArrayWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int progress = 0;
+            int delay = 0;
+            if (e.Argument != null)
+            {
+                delay = (int)e.Argument;
+            }
+            stopwatch.Reset();
+            stopwatch.Start();
+            foreach (byte[] sendThis in byteArrayLines)
+            {
+                if (fileDumpByteArrayWorker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                while (true)
+                {
+                    if (fileDumpByteArrayWorker.CancellationPending == true)
+                    {
+                        e.Cancel = true;
+                        break;
+                    }
+                    if (stopwatch.ElapsedMilliseconds == delay)
+                    {
+                        //port.Write(sendThis);
+                        port.Write(sendThis, 0, sendThis.Length);
+                        addToListSecure("Sent : " + ++progress);
+                        fileDumpByteArrayWorker.ReportProgress(progress);
+                        stopwatch.Reset();
+                        stopwatch.Start();
+                        break;
+                    }
+                }
+            }
+        }
         private void colorizeAll()
         {
             colorizeTerminalBox();
         }
         private void addToList(String text)
         {
-
             terminalTextBox.Text += DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n";
-            //textBlock1.Inlines.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n");
-            //listBox1.Items.Insert(listBox1.Items.Count, DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
+        }
+        private void addToListSecure(String text)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                addToList(text);
+            }), System.Windows.Threading.DispatcherPriority.Normal,null);
         }
         private void colorizeTerminalBox()
         {
@@ -338,9 +402,8 @@ namespace MetroTerminal
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            if (!port.IsOpen)
+            if (redirectIfPortClosed())
             {
-                tabControl1.SelectedIndex = 0;
                 return;
             }
 
@@ -382,6 +445,75 @@ namespace MetroTerminal
                 showErrorMessage("Couldn't read selected file!");
             }
         }
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
+            if (fileDumpWorker.IsBusy == true)
+            {
+                if (sendAsString.IsChecked == true)
+                {
+                    fileDumpWorker.CancelAsync();
+                }
+                else if (sendAsByte.IsChecked == true)
+                {
+                    fileDumpByteArrayWorker.CancelAsync();
+                }
+                sendManualGroupBox.IsEnabled = true;
+                dumpButton.Content = "Send";
+                return;
+            }
+            else
+            {
+                if (redirectIfPortClosed())
+                {
+                    return;
+                }
+                dumpFileProgressBar.Value = 0;
+                if (sendAsString.IsChecked == true)
+                {
+                    if (eofN.IsChecked == true && eofR.IsChecked == true)
+                    {
+                        addEOL = "\r\n";
+                    }
+                    else if (eofN.IsChecked == true && eofR.IsChecked == false)
+                    {
+                        addEOL = "\n";
+                    }
+                    else if (eofN.IsChecked == false && eofR.IsChecked == true)
+                    {
+                        addEOL = "\r";
+                    }
+                    else
+                    {
+                        addEOL = "";
+                    }
+                    fileDumpWorker.RunWorkerAsync();
+                }
+                else if (sendAsByte.IsChecked == true)
+                {
+                    if (manualEofN.IsChecked == true && manualEofR.IsChecked == true)
+                    {
+                        addEOL = "\r\n";
+                    }
+                    else if (manualEofN.IsChecked == true && manualEofR.IsChecked == false)
+                    {
+                        addEOL = "\n";
+                    }
+                    else if (manualEofN.IsChecked == false && manualEofR.IsChecked == true)
+                    {
+                        addEOL = "\r";
+                    }
+                    else
+                    {
+                        addEOL = "";
+                    }
+                    fileDumpByteArrayWorker.RunWorkerAsync();
+                }
+                dumpButton.Content = "Cancel";
+                sendManualGroupBox.IsEnabled = false;
+            }
+
+        }
         private void showMessage(String message, String title)
         {
             MessageBox.Show(message, title);
@@ -392,7 +524,39 @@ namespace MetroTerminal
         }
         void fileDumpWorker_DoWork(object s, DoWorkEventArgs args)
         {
-            
+            int progress = 1;
+            int delay = 0;
+            if (args.Argument != null)
+            {
+                delay = (int)args.Argument;
+            }
+            stopwatch.Reset();
+            stopwatch.Start();
+            foreach (String sendThis in fileLines)
+            {
+                if (fileDumpWorker.CancellationPending == true)
+                {
+                    args.Cancel = true;
+                    return;
+                }
+                while (true)
+                {
+                    if (fileDumpWorker.CancellationPending == true)
+                    {
+                        args.Cancel = true;
+                        break;
+                    }
+                    if (stopwatch.ElapsedMilliseconds == delay)
+                    {
+                        port.Write(sendThis + addEOL);
+                        addToListSecure("Sent : " + sendThis);
+                        fileDumpWorker.ReportProgress(progress++);
+                        stopwatch.Reset();
+                        stopwatch.Start();
+                        break;
+                    }
+                }
+            }
         }
         void manualSendWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -406,7 +570,7 @@ namespace MetroTerminal
 
         void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            dumpFileProgressBar.Value = (int) (((double)e.ProgressPercentage/fileLines.Count)*100);
         }
         void manualSendWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -415,7 +579,8 @@ namespace MetroTerminal
 
         void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            sendManualGroupBox.IsEnabled = true;
+            dumpButton.Content = "Send";
         }
 
         void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -484,10 +649,7 @@ namespace MetroTerminal
             manualEofN.IsEnabled = true;
             manualEofR.IsEnabled = true;
         }
-        private void Button_Click_5(object sender, RoutedEventArgs e)
-        {
 
-        }
 
         private void delayTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -551,6 +713,18 @@ namespace MetroTerminal
                 return;
             }
             newPortGroupBox.Visibility = System.Windows.Visibility.Hidden;
+        }
+        private bool redirectIfPortClosed()
+        {
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
