@@ -57,14 +57,14 @@
             <RowDefinition Height="180*" />
             <RowDefinition Height="170" />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible" TextWrapping="WrapWithOverflow" FontStretch="Condensed" Foreground="#FF65B5E3" IsReadOnly="True" Background="Black" BorderThickness="0" BorderBrush="Black">
-            <TextBox.ContextMenu>
+        <ListBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch" FontStretch="Condensed" Foreground="#FF65B5E3" Background="Black" BorderThickness="0" BorderBrush="Black">
+            <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Clear" Click="MenuItem_Click"></MenuItem>
                     <MenuItem Header="Save Log" Click="MenuItem_Click_1"></MenuItem>
                 </ContextMenu>
-            </TextBox.ContextMenu>
-        </TextBox>
+            </ListBox.ContextMenu>
+        </ListBox>
         <TabControl Grid.Row="1" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Padding="0">
             <TabItem Header="COM Port" Name="tabItem1" FontSize="12">
                 <Grid>

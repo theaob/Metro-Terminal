@@ -128,7 +128,7 @@ namespace MetroTerminal
         }
         private void addToList(String text)
         {
-            terminalTextBox.Text += DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text + "\r\n";
+            terminalTextBox.Items.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
         private void addToListSecure(String text)
         {
@@ -395,10 +395,6 @@ namespace MetroTerminal
                 showMessage(ex.GetType().ToString(), "Error");
             }
         }
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            terminalTextBox.Text = "";
-        }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             if (redirectIfPortClosed())
@@ -582,7 +578,7 @@ namespace MetroTerminal
                     return;
                 }
                 port.Write(sendThis);
-                addToListSecure(sendThis);
+                addToListSecure(sendThis.Trim());
                 manualSendWorker.ReportProgress(progress++);
             }
         }
@@ -626,7 +622,8 @@ namespace MetroTerminal
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            terminalTextBox.Clear();
+            terminalTextBox.Items.Clear();
+            //terminalTextBox.Clear();
         }
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
@@ -645,7 +642,11 @@ namespace MetroTerminal
             {
                 TextWriter tw = new StreamWriter(dialog.FileName);
 
-                tw.Write(terminalTextBox.Text);
+                foreach (var item in terminalTextBox.Items)
+                {
+                    tw.WriteLine(item.ToString());
+                }
+                //tw.Write(terminalTextBox.Text);
                 tw.Close();
 
                 addToList("Log generated");
