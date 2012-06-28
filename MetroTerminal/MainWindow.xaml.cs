@@ -686,8 +686,8 @@ namespace MetroTerminal
             if (tabRow == null)
             {
                 tabControl1.Visibility = System.Windows.Visibility.Hidden;
-                tabRow = grid1.RowDefinitions[1];
-                grid1.RowDefinitions.RemoveAt(1);
+                tabRow = grid1.RowDefinitions[2];
+                grid1.RowDefinitions.RemoveAt(2);
                 //updateWindowButton.Content.ToString();
                 rectangle1.Visibility = System.Windows.Visibility.Collapsed;
                 rectangle2.Visibility = System.Windows.Visibility.Visible;

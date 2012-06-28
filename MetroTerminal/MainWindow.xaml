@@ -54,7 +54,8 @@
     </Controls:MetroWindow.WindowCommands>
     <Grid Name="grid1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="180*" />
+            <RowDefinition Height="175*" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="170" />
         </Grid.RowDefinitions>
         <ListBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch" FontStretch="Condensed" Foreground="#FF65B5E3" Background="Black" BorderThickness="0" BorderBrush="Black" IsTextSearchEnabled="False">
@@ -64,8 +65,9 @@
                     <MenuItem Header="Save Log" Click="MenuItem_Click_1"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
-        </ListBox>
-        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Padding="0">
+        </ListBox >
+        <ProgressBar Grid.Row="1" Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}"></ProgressBar>
+        <TabControl Grid.Row="2" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Padding="0" BorderThickness="0">
             <TabItem Header="COM Port" Name="tabItem1" FontSize="12">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -121,52 +123,49 @@
             </TabItem>
             <TabItem Header="Send" Name="tabItem2">
                 <StackPanel>
-                    <ProgressBar Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}"></ProgressBar>
-
-                <Grid>
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Name="dumpFileGroupBox" Grid.Column="0" Header="Dump File to Port" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Button Name="selectFileButton" Grid.Row="0" Grid.Column="0" Height="23" Click="Button_Click_4">SELECT FILE</Button>
-                            <StackPanel Grid.Row="0" Grid.Column="1">
-                                <CheckBox Name="eofN" Margin="10,0,0,0">\n</CheckBox>
-                                <CheckBox Name="eofR" Margin="10,0,0,0">\r</CheckBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.Column="0">
-                                <RadioButton Name="sendAsString" IsChecked="True">String</RadioButton>
-                                <RadioButton Name="sendAsByte">Byte</RadioButton>
-                            </StackPanel>
-                                <StackPanel Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center">
-                                <TextBox Name="delayTextBox" GotFocus="delayTextBox_GotFocus" LostFocus="delayTextBox_LostFocus">Delay</TextBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-                                <Button  Height="10" Click="Button_Click_5" Name="dumpButton">Send</Button>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Name="sendManualGroupBox" Grid.Column="1" Header="Send Manually" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
-                        <Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Name="dumpFileGroupBox" Grid.Column="0" Header="Dump File to Port" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Button Name="selectFileButton" Grid.Row="0" Grid.Column="0" Height="23" Click="Button_Click_4">SELECT FILE</Button>
+                                <StackPanel Grid.Row="0" Grid.Column="1">
+                                    <CheckBox Name="eofN" Margin="10,0,0,0">\n</CheckBox>
+                                    <CheckBox Name="eofR" Margin="10,0,0,0">\r</CheckBox>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="0">
+                                    <RadioButton Name="sendAsString" IsChecked="True">String</RadioButton>
+                                    <RadioButton Name="sendAsByte">Byte</RadioButton>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBox Name="delayTextBox" GotFocus="delayTextBox_GotFocus" LostFocus="delayTextBox_LostFocus">Delay</TextBox>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                                    <Button Height="10" Click="Button_Click_5" Name="dumpButton">Send</Button>
+                                </StackPanel>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Name="sendManualGroupBox" Grid.Column="1" Header="Send Manually" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBox Grid.ColumnSpan="2" Grid.Row="0" Height="23" Name="manualDataTextBox" GotFocus="manualDataTextBox_GotFocus" LostFocus="manualDataTextBox_LostFocus">Enter Data Here</TextBox>
                                 <StackPanel Grid.Column="0" Grid.Row="1">
@@ -179,9 +178,9 @@
                                     <RadioButton Name="manualSendASCII" Checked="manualSendASCII_Checked" Unchecked="manualSendASCII_Unchecked">ASCII</RadioButton>
                                 </StackPanel>
                                 <Button Grid.Row="2" Grid.Column="1" Height="10" Name="manualSendButton" Click="manualSendButton_Click">Send</Button>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Receive" Name="tabItem3">
