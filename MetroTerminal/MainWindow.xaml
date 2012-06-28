@@ -182,8 +182,8 @@
                         <RowDefinition Height="27*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Recieve As" Grid.Column="0" Grid.Row="0">
                         <StackPanel>
@@ -195,11 +195,10 @@
                     </GroupBox>
                     <Grid Grid.Column="1" Grid.Row="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <StackPanel>
-                            <Button Height="23" Width="70">Save Log</Button>
                         <CheckBox>Receieve From a Separate Port</CheckBox>
                         </StackPanel>
                         <GroupBox Grid.Row="1" Header="Open A New Port">

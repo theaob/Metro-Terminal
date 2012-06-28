@@ -17,3 +17,7 @@ C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTermi
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.exe
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.pdb
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\bin\Debug\MetroTerminal.exe.manifest
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\bin\Debug\MetroTerminal.application
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.exe.manifest
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.application
