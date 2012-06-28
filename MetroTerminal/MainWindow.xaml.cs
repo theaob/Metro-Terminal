@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using System.IO.Ports;
+using System.IO;
 
 namespace MetroTerminal
 {
@@ -28,18 +29,17 @@ namespace MetroTerminal
 
         private Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
+        private LinkedList<String> fileLines = new LinkedList<string>();
+        private LinkedList<byte[]> byteArrayLines = new LinkedList<byte[]>();
+
         public MainWindow()
         {
             InitializeComponent();
             addToList("Application (v" + version.ToString() + ") opened");
             AppWindow.Title += " " +version.ToString(); 
             // THESE LINES MUST BE DELETED
-            for (int i = 0; i < 100; i++)
-            {
-                addToList(version.ToString());
-            }
-            updateAvailable();
-            //
+
+            // DELETE UNTIL HERE
             colorizeAll();
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
@@ -65,10 +65,6 @@ namespace MetroTerminal
         private void colorizeAll()
         {
             colorizeTerminalBox();
-        }
-        private void updateAvailable()
-        {
-            updateWindowButton.Visibility = System.Windows.Visibility.Visible;
         }
         private void addToList(String text)
         {
@@ -190,6 +186,28 @@ namespace MetroTerminal
             }
             return true;
         }
+        private static byte[] StringToByteArray(string hex)
+        {
+            try
+            {
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                return encoding.GetBytes(hex);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                showErrorMessage("Error in hex conversion!");
+            }
+            catch (ArgumentNullException)
+            {
+                showErrorMessage("Error in hex conversion!");
+
+            }
+            catch (ArgumentException)
+            {
+                showErrorMessage("Error in hex conversion!");
+            }
+            return null;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow sw = new SettingsWindow();
@@ -306,7 +324,7 @@ namespace MetroTerminal
             }
             catch (ArgumentOutOfRangeException)
             {
-                showErrorMessage("Please select valid options for " + port.PortName);
+                showErrorMessage("Please select valid options for " + portComboBox.SelectedItem.ToString());
             }
             catch (Exception ex)
             {
@@ -319,28 +337,60 @@ namespace MetroTerminal
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            fileDumpWorker.RunWorkerAsync();
+            if (!port.IsOpen)
+            {
+                tabControl1.SelectedIndex = 0;
+                return;
+            }
+
+            Microsoft.Win32.OpenFileDialog openFile = new Microsoft.Win32.OpenFileDialog();
+            openFile.FileName = "";
+            openFile.ShowDialog();
+
+            if (openFile.FileName.Length < 2)
+            {
+                return;
+            }
+
+            String fileName = openFile.FileName;
+            String file = fileName.Substring(fileName.LastIndexOf("\\") + 1);
+
+            selectFileButton.Content = file;
+
+            addToList(file + " selected");
+
+            fileLines.Clear();
+            byteArrayLines.Clear();
+
+            try
+            {
+                TextReader tr = new StreamReader(fileName);
+
+                String line = "";
+
+                while ((line = tr.ReadLine()) != null)
+                {
+                    fileLines.AddLast(line);
+                    byteArrayLines.AddLast(StringToByteArray(line));
+                }
+
+                tr.Close();
+            }
+            catch (System.IO.IOException)
+            {
+                showErrorMessage("Couldn't read selected file!");
+            }
         }
         private void showMessage(String message, String title)
         {
             MessageBox.Show(message, title);
         }
-        private void showErrorMessage(String message)
+        private static void showErrorMessage(String message)
         {
             MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         void fileDumpWorker_DoWork(object s, DoWorkEventArgs args)
         {
-            int i = 0;
-            while (true)
-            {
-                if (i == 100)
-                {
-                    i = 0;
-                }
-                fileDumpWorker.ReportProgress(i++);
-                System.Threading.Thread.Sleep(100);
-            }
             
         }
         void manualSendWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -355,9 +405,8 @@ namespace MetroTerminal
 
         void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            dumpFileProgressBar.Value = e.ProgressPercentage;
-        }
 
+        }
         void manualSendWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             throw new NotImplementedException();
@@ -399,19 +448,44 @@ namespace MetroTerminal
         }
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
 
+            dialog.Filter = "Text File|*.txt|Log File|*.log|All Files|*.*";
+            dialog.FileName = "";
+            dialog.ShowDialog();
+
+            if (dialog.FileName.Length < 2)
+            {
+                return;
+            }
+
+            try
+            {
+                TextWriter tw = new StreamWriter(dialog.FileName);
+
+                tw.Write(terminalTextBox.Text);
+                tw.Close();
+
+                addToList("Log generated");
+            }
+            catch (System.IO.IOException)
+            {
+                showErrorMessage("Couldn't write to file");
+            }
         }
-
         private void manualSendASCII_Checked(object sender, RoutedEventArgs e)
         {
             manualEofN.IsEnabled = false;
             manualEofR.IsEnabled = false;
         }
-
         private void manualSendASCII_Unchecked(object sender, RoutedEventArgs e)
         {
             manualEofN.IsEnabled = true;
             manualEofR.IsEnabled = true;
+        }
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

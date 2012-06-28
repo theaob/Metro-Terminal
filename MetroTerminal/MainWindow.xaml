@@ -18,7 +18,7 @@
     </Window.Resources>
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Visibility="Hidden" Name="updateWindowButton" Click="updateWindowButton_Click">
+            <Button Visibility="Visible" Name="updateWindowButton" Click="updateWindowButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Name="rectangle1">
                         <Rectangle.Resources>
@@ -153,7 +153,7 @@
                                 <TextBox Name="delayTextBox">Delay</TextBox>
                             </StackPanel>
                             <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-                                <Button  Height="10">Send</Button>
+                                <Button  Height="10" Click="Button_Click_5">Send</Button>
                             </StackPanel>
                         </Grid>
                     </GroupBox>
