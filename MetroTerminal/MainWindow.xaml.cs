@@ -75,17 +75,14 @@ namespace MetroTerminal
             receiveWorker.WorkerSupportsCancellation = true;
             receiveWorker.DoWork += new DoWorkEventHandler(receiveWorker_DoWork);
         }
-
         void fileDumpByteArrayWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             fileDumpWorker_RunWorkerCompleted(sender, e);
         }
-
         void fileDumpByteArrayWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             dumpFileProgressBar.Value = (int)(((double)e.ProgressPercentage / fileLines.Count) * 100);
         }
-
         void fileDumpByteArrayWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             int progress = 0;
@@ -468,6 +465,15 @@ namespace MetroTerminal
                 {
                     return;
                 }
+                int delay = 0;
+                if (!(delayTextBox.Text == "Delay" || delayTextBox.Text == "0"))
+                {
+                    if (!IsItAPositiveNumber(delayTextBox.Text, out delay))
+                    {
+                        showErrorMessage("Please enter a valid delay value!");
+                        return;
+                    }
+                }
                 dumpFileProgressBar.Value = 0;
                 if (sendAsString.IsChecked == true)
                 {
@@ -487,7 +493,7 @@ namespace MetroTerminal
                     {
                         addEOL = "";
                     }
-                    fileDumpWorker.RunWorkerAsync();
+                    fileDumpWorker.RunWorkerAsync(delay);
                 }
                 else if (sendAsByte.IsChecked == true)
                 {
@@ -507,7 +513,7 @@ namespace MetroTerminal
                     {
                         addEOL = "";
                     }
-                    fileDumpByteArrayWorker.RunWorkerAsync();
+                    fileDumpByteArrayWorker.RunWorkerAsync(delay);
                 }
                 dumpButton.Content = "Cancel";
                 sendManualGroupBox.IsEnabled = false;
@@ -546,7 +552,7 @@ namespace MetroTerminal
                         args.Cancel = true;
                         break;
                     }
-                    if (stopwatch.ElapsedMilliseconds == delay)
+                    if (stopwatch.ElapsedMilliseconds >= delay)
                     {
                         port.Write(sendThis + addEOL);
                         addToListSecure("Sent : " + sendThis);
@@ -562,12 +568,10 @@ namespace MetroTerminal
         {
             throw new NotImplementedException();
         }
-
         void manualSendWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             throw new NotImplementedException();
         }
-
         void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             dumpFileProgressBar.Value = (int) (((double)e.ProgressPercentage/fileLines.Count)*100);
@@ -576,18 +580,15 @@ namespace MetroTerminal
         {
             throw new NotImplementedException();
         }
-
         void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             sendManualGroupBox.IsEnabled = true;
             dumpButton.Content = "Send";
         }
-
         void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             throw new NotImplementedException();
         }
-
         private void updateWindowButton_Click(object sender, RoutedEventArgs e)
         {
             if (tabRow == null)
@@ -649,8 +650,6 @@ namespace MetroTerminal
             manualEofN.IsEnabled = true;
             manualEofR.IsEnabled = true;
         }
-
-
         private void delayTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (delayTextBox.Text == "Delay")
@@ -658,7 +657,6 @@ namespace MetroTerminal
                 delayTextBox.Text = "";
             }
         }
-
         private void delayTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(delayTextBox.Text) || String.IsNullOrEmpty(delayTextBox.Text))
@@ -666,7 +664,6 @@ namespace MetroTerminal
                 delayTextBox.Text = "Delay";
             }
         }
-
         private void manualDataTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (manualDataTextBox.Text == "Enter Data Here")
@@ -674,7 +671,6 @@ namespace MetroTerminal
                 manualDataTextBox.Text = "";
             }
         }
-
         private void manualDataTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(manualDataTextBox.Text) || String.IsNullOrEmpty(manualDataTextBox.Text))
@@ -682,7 +678,6 @@ namespace MetroTerminal
                 manualDataTextBox.Text = "Enter Data Here";
             }
         }
-
         private void manualRepeat_LostFocus(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(manualRepeat.Text) || String.IsNullOrEmpty(manualRepeat.Text))
@@ -690,7 +685,6 @@ namespace MetroTerminal
                 manualRepeat.Text = "Repeat";
             }
         }
-
         private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
         {
             if (manualRepeat.Text == "Repeat")
@@ -698,12 +692,10 @@ namespace MetroTerminal
                 manualRepeat.Text = "";
             }
         }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             newPortGroupBox.Visibility = System.Windows.Visibility.Visible;
         }
-
         private void receiveOtherPort_Unchecked(object sender, RoutedEventArgs e)
         {
             if (portReceive.IsOpen)
