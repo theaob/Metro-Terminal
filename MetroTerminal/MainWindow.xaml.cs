@@ -454,6 +454,12 @@ namespace MetroTerminal
                     fileDumpByteArrayWorker.CancelAsync();
                 }
                 sendManualGroupBox.IsEnabled = true;
+                selectFileButton.IsEnabled = true;
+                eofN.IsEnabled = true;
+                eofR.IsEnabled = true;
+                delayTextBox.IsEnabled = true;
+                sendAsByte.IsEnabled = true;
+                sendAsString.IsEnabled = true;
                 dumpButton.Content = "Send";
                 return;
             }
@@ -519,6 +525,12 @@ namespace MetroTerminal
                 }
                 dumpButton.Content = "Cancel";
                 sendManualGroupBox.IsEnabled = false;
+                selectFileButton.IsEnabled = false;
+                eofN.IsEnabled = false;
+                eofR.IsEnabled = false;
+                delayTextBox.IsEnabled = false;
+                sendAsByte.IsEnabled = false;
+                sendAsString.IsEnabled = false;
             }
 
         }
@@ -622,7 +634,7 @@ namespace MetroTerminal
                 string toSend = "";
                 foreach (byte a in sendThis)
                 {
-                    toSend += a.ToString();
+                    toSend += " " + a.ToString();
                 }
                 int progress = 1;
                 for (int i = 0; i < manualRepeatCount; i++)
@@ -647,10 +659,22 @@ namespace MetroTerminal
         {
             manualSendButton.Content = "Send";
             dumpFileGroupBox.IsEnabled = true;
+            manualDataTextBox.IsEnabled = true;
+            manualEofN.IsEnabled = true;
+            manualEofR.IsEnabled = true;
+            manualRepeat.IsEnabled = true;
+            manualSendASCII.IsEnabled = true;
+            manualSendString.IsEnabled = true;
         }
         void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             sendManualGroupBox.IsEnabled = true;
+            selectFileButton.IsEnabled = true;
+            eofN.IsEnabled = true;
+            eofR.IsEnabled = true;
+            delayTextBox.IsEnabled = true;
+            sendAsByte.IsEnabled = true;
+            sendAsString.IsEnabled = true;
             dumpButton.Content = "Send";
         }
         void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -822,13 +846,24 @@ namespace MetroTerminal
                     manualSendWorker.RunWorkerAsync(asciiChars);
                     manualSendButton.Content = "Cancel";
                     dumpFileGroupBox.IsEnabled = false;
-
+                    manualDataTextBox.IsEnabled = false;
+                    manualEofN.IsEnabled = false;
+                    manualEofR.IsEnabled = false;
+                    manualRepeat.IsEnabled = false;
+                    manualSendASCII.IsEnabled = false;
+                    manualSendString.IsEnabled = false;
                 }
                 else
                 {
                     manualSendWorker.CancelAsync();
                     manualSendButton.Content = "Send";
                     dumpFileGroupBox.IsEnabled = true;
+                    manualDataTextBox.IsEnabled = true;
+                    manualEofN.IsEnabled = true;
+                    manualEofR.IsEnabled = true;
+                    manualRepeat.IsEnabled = true;
+                    manualSendASCII.IsEnabled = true;
+                    manualSendString.IsEnabled = true;
                 }
             }
             else
@@ -850,6 +885,12 @@ namespace MetroTerminal
                     manualSendWorker.RunWorkerAsync(sendThis);
                     manualSendButton.Content = "Cancel";
                     dumpFileGroupBox.IsEnabled = false;
+                    manualDataTextBox.IsEnabled = false;
+                    manualEofN.IsEnabled = false;
+                    manualEofR.IsEnabled = false;
+                    manualRepeat.IsEnabled = false;
+                    manualSendASCII.IsEnabled = false;
+                    manualSendString.IsEnabled = false;
 
                 }
                 else
@@ -857,6 +898,12 @@ namespace MetroTerminal
                     manualSendWorker.CancelAsync();
                     manualSendButton.Content = "Send";
                     dumpFileGroupBox.IsEnabled = true;
+                    manualDataTextBox.IsEnabled = true;
+                    manualEofN.IsEnabled = true;
+                    manualEofR.IsEnabled = true;
+                    manualRepeat.IsEnabled = true;
+                    manualSendASCII.IsEnabled = true;
+                    manualSendString.IsEnabled = true;
                 }
             }
         }
