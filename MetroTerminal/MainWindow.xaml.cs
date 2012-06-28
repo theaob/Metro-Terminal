@@ -463,6 +463,10 @@ namespace MetroTerminal
                 {
                     return;
                 }
+                if (fileLines.Count == 0)
+                {
+                    Button_Click_4(sender, e);
+                }
                 int delay = 0;
                 if (!(delayTextBox.Text == "Delay" || delayTextBox.Text == "0"))
                 {
@@ -702,7 +706,8 @@ namespace MetroTerminal
             }
             else if (!IsItAPositiveNumber(manualRepeat.Text, out manualRepeatCount))
             {
-                manualRepeat.Text = "Integer Only";
+                manualRepeatCount = 1;
+                manualRepeat.Text = "Repeat";
             }
         }
         private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
@@ -750,29 +755,37 @@ namespace MetroTerminal
                 return;
             }
 
-            if (manualEofR.IsChecked == true)
+            if (manualSendASCII.IsChecked == true)
             {
-                sendThis += "\r";
-            }
 
-            if (manualEofN.IsChecked == true)
-            {
-                sendThis += "\n";
-            }
-
-            if (!manualSendWorker.IsBusy)
-            {
-                dumpFileProgressBar.Value = 0;
-                manualSendWorker.RunWorkerAsync(sendThis);
-                manualSendButton.Content = "Cancel";
-                dumpFileGroupBox.IsEnabled = false;
-                
             }
             else
             {
-                manualSendWorker.CancelAsync();
-                manualSendButton.Content = "Send";
-                dumpFileGroupBox.IsEnabled = true;
+
+                if (manualEofR.IsChecked == true)
+                {
+                    sendThis += "\r";
+                }
+
+                if (manualEofN.IsChecked == true)
+                {
+                    sendThis += "\n";
+                }
+
+                if (!manualSendWorker.IsBusy)
+                {
+                    dumpFileProgressBar.Value = 0;
+                    manualSendWorker.RunWorkerAsync(sendThis);
+                    manualSendButton.Content = "Cancel";
+                    dumpFileGroupBox.IsEnabled = false;
+
+                }
+                else
+                {
+                    manualSendWorker.CancelAsync();
+                    manualSendButton.Content = "Send";
+                    dumpFileGroupBox.IsEnabled = true;
+                }
             }
         }
     }

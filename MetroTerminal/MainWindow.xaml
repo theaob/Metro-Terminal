@@ -57,7 +57,7 @@
             <RowDefinition Height="180*" />
             <RowDefinition Height="170" />
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch" FontStretch="Condensed" Foreground="#FF65B5E3" Background="Black" BorderThickness="0" BorderBrush="Black">
+        <ListBox Grid.Row="0" HorizontalAlignment="Stretch" Name="terminalTextBox" VerticalAlignment="Stretch" FontStretch="Condensed" Foreground="#FF65B5E3" Background="Black" BorderThickness="0" BorderBrush="Black" IsTextSearchEnabled="False">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Clear" Click="MenuItem_Click"></MenuItem>
@@ -121,7 +121,7 @@
             </TabItem>
             <TabItem Header="Send" Name="tabItem2">
                 <StackPanel>
-                    <ProgressBar Name="dumpFileProgressBar"></ProgressBar>
+                    <ProgressBar Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}"></ProgressBar>
 
                 <Grid>
                     
