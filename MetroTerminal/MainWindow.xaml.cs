@@ -44,10 +44,7 @@ namespace MetroTerminal
             loadPortsIntoBox(portComboBox);
             loadBaudRates();
             loadSettings();
-
-            
         }
-
         void prepareThreads()
         {
             fileDumpWorker.WorkerReportsProgress = true;
@@ -69,8 +66,6 @@ namespace MetroTerminal
         {
             colorizeTerminalBox();
         }
-        
-
         private void updateAvailable()
         {
             updateWindowButton.Visibility = System.Windows.Visibility.Visible;
@@ -166,6 +161,7 @@ namespace MetroTerminal
             parityGroupBox.IsEnabled = !parityGroupBox.IsEnabled;
             stopBitsGroupBox.IsEnabled = !stopBitsGroupBox.IsEnabled;
             dataBitsGroupBox.IsEnabled = !dataBitsGroupBox.IsEnabled;
+            scanPortsButton.IsEnabled = !scanPortsButton.IsEnabled;
         }
         private bool IsItAPositiveNumber(String numberString, out int number)
         {
@@ -397,7 +393,25 @@ namespace MetroTerminal
                 rectangle2.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            terminalTextBox.Clear();
+        }
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        private void manualSendASCII_Checked(object sender, RoutedEventArgs e)
+        {
+            manualEofN.IsEnabled = false;
+            manualEofR.IsEnabled = false;
+        }
+
+        private void manualSendASCII_Unchecked(object sender, RoutedEventArgs e)
+        {
+            manualEofN.IsEnabled = true;
+            manualEofR.IsEnabled = true;
+        }
     }
 }
