@@ -146,11 +146,11 @@
                                 <CheckBox Name="eofR" Margin="10,0,0,0">\r</CheckBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0">
-                                <RadioButton Name="sendAsString">String</RadioButton>
+                                <RadioButton Name="sendAsString" IsChecked="True">String</RadioButton>
                                 <RadioButton Name="sendAsByte">Byte</RadioButton>
                             </StackPanel>
                                 <StackPanel Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center">
-                                <TextBox Name="delayTextBox">Delay</TextBox>
+                                <TextBox Name="delayTextBox" GotFocus="delayTextBox_GotFocus" LostFocus="delayTextBox_LostFocus">Delay</TextBox>
                             </StackPanel>
                             <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                                 <Button  Height="10" Click="Button_Click_5">Send</Button>
@@ -168,12 +168,12 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBox Grid.ColumnSpan="2" Grid.Row="0" Height="23" Name="manualDataTextBox">Enter Data Here</TextBox>
+                                <TextBox Grid.ColumnSpan="2" Grid.Row="0" Height="23" Name="manualDataTextBox" GotFocus="manualDataTextBox_GotFocus" LostFocus="manualDataTextBox_LostFocus">Enter Data Here</TextBox>
                                 <StackPanel Grid.Column="0" Grid.Row="1">
                                     <CheckBox Name="manualEofN">\n</CheckBox>
                                     <CheckBox Name="manualEofR">\r</CheckBox>
                                 </StackPanel>
-                                <TextBox Grid.Row="1" Grid.Column="1" Height="23" Name="manualRepeat">Repeats</TextBox>
+                                <TextBox Grid.Row="1" Grid.Column="1" Height="23" Name="manualRepeat" LostFocus="manualRepeat_LostFocus" GotFocus="manualRepeat_GotFocus" Text="Repeat"></TextBox>
                                 <StackPanel Grid.Row="2" Grid.Column="0">
                                     <RadioButton Name="manualSendString" IsChecked="True">String</RadioButton>
                                     <RadioButton Name="manualSendASCII" Checked="manualSendASCII_Checked" Unchecked="manualSendASCII_Unchecked">ASCII</RadioButton>

@@ -487,5 +487,53 @@ namespace MetroTerminal
         {
 
         }
+
+        private void delayTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (delayTextBox.Text == "Delay")
+            {
+                delayTextBox.Text = "";
+            }
+        }
+
+        private void delayTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(delayTextBox.Text) || String.IsNullOrEmpty(delayTextBox.Text))
+            {
+                delayTextBox.Text = "Delay";
+            }
+        }
+
+        private void manualDataTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (manualDataTextBox.Text == "Enter Data Here")
+            {
+                manualDataTextBox.Text = "";
+            }
+        }
+
+        private void manualDataTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(manualDataTextBox.Text) || String.IsNullOrEmpty(manualDataTextBox.Text))
+            {
+                manualDataTextBox.Text = "Enter Data Here";
+            }
+        }
+
+        private void manualRepeat_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(manualRepeat.Text) || String.IsNullOrEmpty(manualRepeat.Text))
+            {
+                manualRepeat.Text = "Repeat";
+            }
+        }
+
+        private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (manualRepeat.Text == "Repeat")
+            {
+                manualRepeat.Text = "";
+            }
+        }
     }
 }
