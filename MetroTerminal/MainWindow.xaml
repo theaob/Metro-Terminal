@@ -178,7 +178,7 @@
                                     <RadioButton Name="manualSendString" IsChecked="True">String</RadioButton>
                                     <RadioButton Name="manualSendASCII" Checked="manualSendASCII_Checked" Unchecked="manualSendASCII_Unchecked">ASCII</RadioButton>
                                 </StackPanel>
-                                <Button Grid.Row="2" Grid.Column="1" Height="10" Name="manualSendButton">Send</Button>
+                                <Button Grid.Row="2" Grid.Column="1" Height="10" Name="manualSendButton" Click="manualSendButton_Click">Send</Button>
                         </Grid>
                     </GroupBox>
                 </Grid>

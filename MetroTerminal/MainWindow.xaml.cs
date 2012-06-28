@@ -22,6 +22,8 @@ namespace MetroTerminal
 
         private System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
+        private int manualRepeatCount = 1;
+
         private BrushConverter bc = new BrushConverter();
         private FontFamilyConverter ffc = new FontFamilyConverter();
         private FontSizeConverter fsc = new FontSizeConverter();
@@ -566,11 +568,23 @@ namespace MetroTerminal
         }
         void manualSendWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            dumpFileProgressBar.Value = (int)(((double)e.ProgressPercentage / manualRepeatCount) * 100);
         }
         void manualSendWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            String sendThis = e.Argument.ToString();
+            int progress = 1;
+            for (int i = 0; i < manualRepeatCount; i++)
+            {
+                if (manualSendWorker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                port.Write(sendThis);
+                addToListSecure(sendThis);
+                manualSendWorker.ReportProgress(progress++);
+            }
         }
         void fileDumpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -578,7 +592,8 @@ namespace MetroTerminal
         }
         void manualSendWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            manualSendButton.Content = "Send";
+            dumpFileGroupBox.IsEnabled = true;
         }
         void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -684,6 +699,10 @@ namespace MetroTerminal
             {
                 manualRepeat.Text = "Repeat";
             }
+            else if (!IsItAPositiveNumber(manualRepeat.Text, out manualRepeatCount))
+            {
+                manualRepeat.Text = "Integer Only";
+            }
         }
         private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -716,6 +735,43 @@ namespace MetroTerminal
             else
             {
                 return false;
+            }
+        }
+        private void manualSendButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (redirectIfPortClosed())
+            {
+                return;
+            }
+            String sendThis = manualDataTextBox.Text;
+            if (sendThis.Length < 1 || sendThis == null)
+            {
+                return;
+            }
+
+            if (manualEofR.IsChecked == true)
+            {
+                sendThis += "\r";
+            }
+
+            if (manualEofN.IsChecked == true)
+            {
+                sendThis += "\n";
+            }
+
+            if (!manualSendWorker.IsBusy)
+            {
+                dumpFileProgressBar.Value = 0;
+                manualSendWorker.RunWorkerAsync(sendThis);
+                manualSendButton.Content = "Cancel";
+                dumpFileGroupBox.IsEnabled = false;
+                
+            }
+            else
+            {
+                manualSendWorker.CancelAsync();
+                manualSendButton.Content = "Send";
+                dumpFileGroupBox.IsEnabled = true;
             }
         }
     }
