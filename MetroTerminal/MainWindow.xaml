@@ -50,6 +50,18 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
+            <Button Visibility="Visible">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="14">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cloud_download}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
     <Grid Name="grid1">
