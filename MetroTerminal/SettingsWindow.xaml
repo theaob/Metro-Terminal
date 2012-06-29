@@ -83,10 +83,56 @@
             </Grid>
         </TabItem>
         <TabItem Header="Other">
-
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="97*" />
+                    <RowDefinition Height="71*" />
+                    <RowDefinition Height="36*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="125*" />
+                    <ColumnDefinition Width="143*" />
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Row="0" Grid.Column="0" Header="Miscellaneous">
+                    <StackPanel>
+                        <CheckBox Margin="5,5,5,5">Always on Top</CheckBox>
+                        <CheckBox Margin="5,0,5,5">Instant Scroll</CheckBox>
+                        <CheckBox Margin="5,0,5,5">Auto Update</CheckBox>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Row="0" Grid.Column="1" Header="Opacity">
+                    <Slider Height="40" Value="1" TickPlacement="Both" TickFrequency="0.1" LargeChange="0.1" Minimum="0.2" Maximum="1" SmallChange="0.05"></Slider>
+                </GroupBox>
+                <Button Grid.Row="3" Height="23">Reset SETTINGS</Button>
+            </Grid>
         </TabItem>
         <TabItem Header="Update">
-            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28*" />
+                    <RowDefinition Height="90*" />
+                    <RowDefinition Height="54*" />
+                    <RowDefinition Height="32*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="132*" />
+                    <ColumnDefinition Width="136*" />
+                </Grid.ColumnDefinitions>
+                <Button Height="23" Grid.Column="1" Grid.Row="3" Margin="10,0,10,0">Check For update</Button>
+                <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.RowSpan="3" Header="Update Options" Margin="2,2,2,0">
+                    <StackPanel>
+                        <CheckBox Margin="10,5,0,0">
+                            <TextBlock TextWrapping="Wrap"  
+                            Text="Display new update available icon"/>
+                        </CheckBox>
+                        <CheckBox Margin="10,5,0,0">
+                            <TextBlock TextWrapping="Wrap"  
+                            Text="Automatically install new updates" />
+                        </CheckBox>
+                    </StackPanel>
+                </GroupBox>
+                <Button Height="23" Grid.Row="3" Grid.Column="0" Margin="10,0,10,0">Support</Button>
+            </Grid>
         </TabItem>
 
     </TabControl>
