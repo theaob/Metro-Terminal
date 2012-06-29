@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Height="300" Width="300" WindowStartupLocation="CenterScreen" Title="SETTINGS" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="ToolWindow" Loaded="MetroWindow_Loaded">
+        Height="300" Width="300" WindowStartupLocation="CenterScreen" Title="SETTINGS" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="ToolWindow" Loaded="MetroWindow_Loaded" AllowsTransparency="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -95,13 +95,13 @@
                 </Grid.ColumnDefinitions>
                 <GroupBox Grid.Row="0" Grid.Column="0" Header="Miscellaneous">
                     <StackPanel>
-                        <CheckBox Margin="5,5,5,5">Always on Top</CheckBox>
-                        <CheckBox Margin="5,0,5,5">Instant Scroll</CheckBox>
-                        <CheckBox Margin="5,0,5,5">Auto Update</CheckBox>
+                        <CheckBox Margin="5,5,5,5" Name="alwaysOnTopCheckBox">Always on Top</CheckBox>
+                        <CheckBox Margin="5,0,5,5" Name="instantScrollCheckBox">Instant Scroll</CheckBox>
+                        <CheckBox Margin="5,0,5,5" Name="autoUpdateCheckBox">Auto Update</CheckBox>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Grid.Row="0" Grid.Column="1" Header="Opacity">
-                    <Slider Height="40" Value="1" TickPlacement="Both" TickFrequency="0.1" LargeChange="0.1" Minimum="0.2" Maximum="1" SmallChange="0.05"></Slider>
+                    <Slider Height="40" Value="1" TickPlacement="Both" TickFrequency="0.1" LargeChange="0.1" Minimum="0.2" Maximum="1" SmallChange="0.05" Name="opacitySlider" ValueChanged="opacitySlider_ValueChanged"></Slider>
                 </GroupBox>
                 <GroupBox Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Header="Terminal Font">
                     <Grid>
@@ -126,7 +126,7 @@
                     </Grid>
                 </GroupBox>
                 <Button Grid.Row="3" Height="23" Margin="10,0,10,0">Reset SETTINGS</Button>
-                <Button Grid.Row="3" Grid.Column="1" Height="23" Margin="10,0,10,0">SAVE SETTINGS</Button>
+                <Button Grid.Row="3" Grid.Column="1" Height="23" Margin="10,0,10,0" Click="Button_Click_2">SAVE SETTINGS</Button>
             </Grid>
         </TabItem>
         <TabItem Header="Update">

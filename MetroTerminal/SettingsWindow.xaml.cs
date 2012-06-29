@@ -274,5 +274,37 @@ namespace MetroTerminal
             fontSizeSelector.Text = TerminalSettings.Default.terminalFontSize.ToString();
                 //TerminalSettings.Default.terminalFontFamily);
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TerminalSettings.Default.terminalFontFamily = fontFamilySelector.SelectedValue.ToString();
+                TerminalSettings.Default.terminalFontSize = double.Parse(fontSizeSelector.SelectedValue.ToString());
+                //TerminalSettings.Default.autoUpdate
+                TerminalSettings.Default.opacity = opacitySlider.Value;
+                TerminalSettings.Default.instantScroll = (instantScrollCheckBox.IsChecked == true);
+                TerminalSettings.Default.alwaysOnTop = (alwaysOnTopCheckBox.IsChecked == true);
+                TerminalSettings.Default.autoUpdate = (autoUpdateCheckBox.IsChecked == true);
+
+                TerminalSettings.Default.Save();
+            }
+            catch (FormatException)
+            {
+                System.Windows.MessageBox.Show("Please enter a valid font size!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            catch (OverflowException)
+            {
+                System.Windows.MessageBox.Show("Please enter a valid font size!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+        }
+
+        private void opacitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Opacity = opacitySlider.Value;
+        }
     }
 }

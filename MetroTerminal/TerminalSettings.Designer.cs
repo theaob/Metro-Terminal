@@ -198,9 +198,9 @@ namespace MetroTerminal {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public float opacity {
+        public double opacity {
             get {
-                return ((float)(this["opacity"]));
+                return ((double)(this["opacity"]));
             }
             set {
                 this["opacity"] = value;
