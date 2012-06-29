@@ -679,7 +679,96 @@ namespace MetroTerminal
         }
         void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            throw new NotImplementedException();
+            int mode = (int) e.Argument;
+            portReceive.ReadTimeout = 200;
+            switch (mode)
+            {
+                case 1:
+                    {
+                        String read = "";
+                        while (true)
+                        {
+                            if (receiveWorker.CancellationPending == true)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            try
+                            {
+                                read = portReceive.ReadLine();
+                                addToListSecure(read);
+                            }catch(TimeoutException)
+                            {
+                            }
+                            
+                        }
+                    }
+                case 2:
+                    {
+                        char read;
+                        while (true)
+                        {
+                            if (receiveWorker.CancellationPending == true)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            try
+                            {
+                                read = (char)portReceive.ReadChar();
+                                addToListSecure(read.ToString());
+                            }
+                            catch (TimeoutException)
+                            {
+                            }
+                        }
+                    }
+                case 3:
+                    {
+                        byte read;
+                        while (true)
+                        {
+                            if (receiveWorker.CancellationPending == true)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            try
+                            {
+                                read = (byte) portReceive.ReadByte();
+                                addToListSecure(read.ToString());
+                            }
+                            catch (TimeoutException)
+                            {
+                            }
+                        }
+                    }
+                case 4:
+                    {
+                        byte[] read = new byte[32];
+                        while (true)
+                        {
+                            if (receiveWorker.CancellationPending == true)
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
+                            try
+                            {
+                                portReceive.Read(read, 0, 32);
+                                String readS = "";
+                                foreach (byte i in read)
+                                {
+                                    readS += i.ToString();
+                                }
+                                addToListSecure(readS);
+                            }
+                            catch (TimeoutException)
+                            {
+                            }
+                        }
+                    }
+            }
         }
         private void updateWindowButton_Click(object sender, RoutedEventArgs e)
         {
@@ -798,6 +887,13 @@ namespace MetroTerminal
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             newPortGroupBox.Visibility = System.Windows.Visibility.Visible;
+            loadPortsIntoBox(newPortPortnameBox);
+            newPortBaudRateBox.Items.Clear();
+            foreach (String rate in TerminalSettings.Default.baudRates)
+            {
+                newPortBaudRateBox.Items.Add(rate);
+            }
+            newPortBaudRateBox.SelectedIndex = TerminalSettings.Default.lastSelectedBaudRateIndex;
         }
         private void receiveOtherPort_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -905,6 +1001,89 @@ namespace MetroTerminal
                     manualSendASCII.IsEnabled = true;
                     manualSendString.IsEnabled = true;
                 }
+            }
+        }
+        private void newPortRefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadPortsIntoBox(newPortPortnameBox);
+        }
+        private void newPortOpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (receiveWorker.IsBusy == true)
+            {
+                showErrorMessage("Port is busy!");
+                return;
+            }
+            if (portReceive.IsOpen == true)
+            {
+                port.Close();
+                newPortOpenButton.Content = "Open";
+                newPortRefreshButton.IsEnabled = true;
+                newPortBaudRateBox.IsEnabled = true;
+                newPortPortnameBox.IsEnabled = true;
+                receiveOtherPort.IsEnabled = true;
+            }
+            else
+            {
+                int baudRate = 9600;
+                try
+                {
+                    
+                    if (!IsItAPositiveNumber(newPortBaudRateBox.SelectedValue.ToString(), out baudRate))
+                    {
+                        showErrorMessage("Please enter a valid baud rate!");
+                    }
+
+                    portReceive.BaudRate = baudRate;
+                    portReceive.PortName = newPortPortnameBox.SelectedValue.ToString();
+                    portReceive.StopBits = StopBits.One;
+                    portReceive.Parity = Parity.None;
+                    portReceive.DataBits = 8;
+                    portReceive.Open();
+                    addToList(newPortPortnameBox.SelectedValue.ToString() + " is open!");
+                    newPortOpenButton.Content = "Close";
+                    newPortRefreshButton.IsEnabled = false;
+                    newPortBaudRateBox.IsEnabled = false;
+                    newPortPortnameBox.IsEnabled = false;
+                    receiveOtherPort.IsEnabled = false;
+                }
+                catch (InvalidOperationException eox)
+                {
+                    showErrorMessage(eox.Message);
+                }
+            }
+        }
+        private void startListeningButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (receiveWorker.IsBusy == true)
+            {
+                receiveWorker.CancelAsync();
+                startListeningButton.Content = "START LISTENING";
+                receiveAsGroupBox.IsEnabled = true;
+                newPortGroupBox.IsEnabled = true;
+                return;
+            }
+            else
+            {
+                if (recieveStringLine.IsChecked == true)
+                {
+                    receiveWorker.RunWorkerAsync(1);
+                }
+                else if (recieveOneChar.IsChecked == true)
+                {
+                    receiveWorker.RunWorkerAsync(2);
+                }
+                else if (recieveOneByte.IsChecked == true)
+                {
+                    receiveWorker.RunWorkerAsync(3);
+                }
+                else if (recieveCharArray.IsChecked == true)
+                {
+                    receiveWorker.RunWorkerAsync(4);
+                }
+                startListeningButton.Content = "CANCEL";
+                receiveAsGroupBox.IsEnabled = false;
+                newPortGroupBox.IsEnabled = false;
             }
         }
     }

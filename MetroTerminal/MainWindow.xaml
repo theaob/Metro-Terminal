@@ -66,7 +66,7 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox >
-        <ProgressBar Grid.Row="1" Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}" Value="100" IsIndeterminate="False" IsEnabled="False" LargeChange="5" SmallChange="1" BorderThickness="0" ClipToBounds="True" Opacity="0.2" Height="5" Foreground="{x:Null}" OpacityMask="Blue"></ProgressBar>
+        <ProgressBar Grid.Row="1" Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}" Value="100" IsIndeterminate="False" IsEnabled="False" LargeChange="5" SmallChange="1" BorderThickness="0" ClipToBounds="True" Opacity="0.8" Height="5" Foreground="{x:Null}" OpacityMask="Blue"></ProgressBar>
         <TabControl Grid.Row="2" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Padding="0" BorderThickness="0">
             <TabItem Header="COM Port" Name="tabItem1" FontSize="12">
                 <Grid>
@@ -195,10 +195,10 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Recieve As" Grid.Column="0" Grid.Row="0" Name="receiveAsGroupBox">
                         <StackPanel>
-                            <RadioButton IsChecked="True">String Line</RadioButton>
-                            <RadioButton>One Char</RadioButton>
-                            <RadioButton>One Byte</RadioButton>
-                            <RadioButton>Char Array</RadioButton>
+                            <RadioButton IsChecked="True" Name="recieveStringLine">String Line</RadioButton>
+                            <RadioButton Name="recieveOneChar">One Char</RadioButton>
+                            <RadioButton Name="recieveOneByte">One Byte</RadioButton>
+                            <RadioButton Name="recieveCharArray">Char Array</RadioButton>
                         </StackPanel>
                     </GroupBox>
                     <Grid Grid.Column="1" Grid.Row="0">
@@ -211,20 +211,22 @@
                         </StackPanel>
                         <GroupBox Grid.Row="1" Header="Open A New Port" Name="newPortGroupBox" Visibility="Hidden">
                             <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="30*"/>
                                 </Grid.ColumnDefinitions>
-                                <ComboBox Grid.Column="0" Height="23">Port</ComboBox>
-                                <ComboBox Grid.Column="1" Height="23">Baud Rate</ComboBox>
-                                <Button Grid.Column="2" Height="10">Refresh</Button>
-                                <Button Grid.Column="3" Height="10">Open</Button>
+                                <ComboBox Grid.Column="0" Grid.Row="1" Height="23" Name="newPortPortnameBox">Port</ComboBox>
+                                <ComboBox Grid.Column="0" Grid.Row="0" Height="23" Name="newPortBaudRateBox">Baud Rate</ComboBox>
+                                <Button Grid.Column="1" Grid.Row="0" Height="10" Name="newPortRefreshButton" Click="newPortRefreshButton_Click">Refresh</Button>
+                                <Button Grid.Column="1" Grid.Row="1" Height="10" Name="newPortOpenButton" Click="newPortOpenButton_Click">Open</Button>
                             </Grid>
                         </GroupBox>
                     </Grid>
-                    <Button Grid.Row="1" Grid.ColumnSpan="2">START LISTENING</Button>
+                    <Button Grid.Row="1" Grid.ColumnSpan="2" Name="startListeningButton" Click="startListeningButton_Click">START LISTENING</Button>
                 </Grid>
             </TabItem>
         </TabControl>
