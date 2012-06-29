@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using Xceed.Wpf.Toolkit;
 
 namespace MetroTerminal
 {
@@ -21,6 +22,7 @@ namespace MetroTerminal
     {
 
         private BrushConverter bc = new BrushConverter();
+        private ColorConverter cc = new ColorConverter();
         private FontFamilyConverter ffc = new FontFamilyConverter();
         private FontSizeConverter fsc = new FontSizeConverter();
 
@@ -35,9 +37,14 @@ namespace MetroTerminal
         private void terminalColorize()
         {
             listBoxTest.Background = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalBackColor);
-            terminalBackButton.Background = listBoxTest.Background;
             listBoxTest.Foreground = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalFontColor);
-            terminalForeButton.Background = listBoxTest.Foreground;
+            //terminalForeButton.Background = listBoxTest.Foreground;
+            //terminalBackPicker.Background = listBoxTest.Background;
+            terminalBackPicker.SelectedColor = (Color) cc.ConvertFrom(TerminalSettings.Default.terminalBackColor);
+            terminalForePicker.SelectedColor = (Color) cc.ConvertFrom(TerminalSettings.Default.terminalFontColor);
+            //terminalBackPicker.Foreground = listBoxTest.Background;
+            //terminalForePicker.Background = listBoxTest.Foreground;
+            //terminalForePicker.Foreground = listBoxTest.Foreground;
             listBoxTest.FontFamily = (FontFamily) ffc.ConvertFrom(TerminalSettings.Default.terminalFontFamily);
             listBoxTest.FontSize = TerminalSettings.Default.terminalFontSize;
         }
@@ -177,13 +184,20 @@ namespace MetroTerminal
             }
             listBoxTest.Foreground = code;
             listBoxTest.Background = Brushes.Black;
-            terminalBackButton.Background = Brushes.Black;
-            terminalForeButton.Background = listBoxTest.Foreground;
+            terminalBackPicker.SelectedColor = Brushes.Black.Color;
+            terminalForePicker.SelectedColor = (Color)cc.ConvertFrom(code.ToString());
         }
 
-        private void terminalBackButton_Click(object sender, RoutedEventArgs e)
+        private void terminalForePicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
         {
+            var mediaColor = cc.ConvertFrom(terminalForePicker.SelectedColor.ToString());
+            listBoxTest.Foreground = (System.Windows.Media.Brush)bc.ConvertFromString(mediaColor.ToString());
+        }
 
+        private void terminalBackPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            var mediaColor = cc.ConvertFrom(terminalBackPicker.SelectedColor.ToString());
+            listBoxTest.Background = (System.Windows.Media.Brush)bc.ConvertFromString(mediaColor.ToString());
         }
     }
 }

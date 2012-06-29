@@ -1,6 +1,7 @@
 ﻿<Controls:MetroWindow x:Class="MetroTerminal.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Height="300" Width="300" WindowStartupLocation="CenterScreen" Title="SETTINGS" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Window.Resources>
@@ -60,14 +61,14 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <WrapPanel Grid.Row="0">
+                        <Grid Grid.Row="0">
                         <Label>Background:</Label>
-                        <Button Name="terminalBackButton" Margin="10,2,0,0" Height="20" Width="30" VerticalAlignment="Top" Click="terminalBackButton_Click"></Button>
-                        </WrapPanel>
-                        <WrapPanel Grid.Row="1">
+                            <xctk:ColorPicker Name="terminalBackPicker" Height="23" Width="40" Margin="80,0,0,2" SelectedColorChanged="terminalBackPicker_SelectedColorChanged"></xctk:ColorPicker>
+                        </Grid>
+                        <Grid Grid.Row="1">
                         <Label>Foreground:</Label>
-                        <Button Name="terminalForeButton" Margin="10,2,0,0" Height="20" Width="30"></Button>
-                        </WrapPanel>
+                        <xctk:ColorPicker Name="terminalForePicker" Height="23" Width="40" Margin="80,0,0,2" SelectedColorChanged="terminalForePicker_SelectedColorChanged"></xctk:ColorPicker>
+                        </Grid>
                         <Button Grid.Row="2" Click="Button_Click">Use Scheme Colors</Button>
                     </Grid>
                 </GroupBox>
