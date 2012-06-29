@@ -26,6 +26,7 @@ namespace MetroTerminal
 
         private BrushConverter bc = new BrushConverter();
         private ColorConverter cc = new ColorConverter();
+        private FontFamilyConverter ffc = new FontFamilyConverter();
 
         public SettingsWindow()
         {
@@ -242,6 +243,28 @@ namespace MetroTerminal
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             fontFamilySelector.ItemsSource = Fonts.SystemFontFamilies;
+
+           /* int index = 0;
+            int count = 0;
+            for (int i = 0; i <= Fonts.SystemFontFamilies.Count; i++)
+            {
+                if(String.Equals(fontFamilySelector.Items[i].ToString(), TerminalSettings.Default.terminalFontFamily, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    index = i;
+                }
+                String x = fontFamilySelector.Items[i].ToString();
+                count = i;
+            }*/
+            //Fonts.SystemFontFamilies[
+            FontFamily settingFF = (FontFamily)ffc.ConvertFrom(TerminalSettings.Default.terminalFontFamily);
+            //var s = Fonts.SystemFontFamilies.Ge
+
+            //int index = fontFamilySelector.Items.IndexOf(TerminalSettings.Default.terminalFontFamily);
+
+            //fontFamilySelector.Text = TerminalSettings.Default.terminalFontFamily;
+            fontFamilySelector.SelectedIndex = fontFamilySelector.Items.IndexOf(settingFF);
+                //TerminalSettings.Default.terminalFontFamily);
+            //fontFamilySelector.SelectedValue = TerminalSettings.Default.terminalFontFamily;
             //fontFamilySelector.SelectedIndex = fontFamilySelector.Items.IndexOf(FontFamily.G
             for(int i = 6; i <= 72; i++)
             {

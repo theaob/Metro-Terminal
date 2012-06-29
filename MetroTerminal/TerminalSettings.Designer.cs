@@ -49,7 +49,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Sagoe UI")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
         public string terminalFontFamily {
             get {
                 return ((string)(this["terminalFontFamily"]));

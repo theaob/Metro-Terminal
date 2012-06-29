@@ -9,7 +9,7 @@
       <Value Profile="(Default)">#FF41B1E1</Value>
     </Setting>
     <Setting Name="terminalFontFamily" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sagoe UI</Value>
+      <Value Profile="(Default)">Segoe UI</Value>
     </Setting>
     <Setting Name="terminalFontSize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">10</Value>
