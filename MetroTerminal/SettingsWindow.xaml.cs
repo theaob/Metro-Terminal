@@ -273,6 +273,13 @@ namespace MetroTerminal
             }
             fontSizeSelector.Text = TerminalSettings.Default.terminalFontSize.ToString();
                 //TerminalSettings.Default.terminalFontFamily);
+
+            autoUpdateCheckBox.IsChecked = TerminalSettings.Default.autoUpdate;
+            instantScrollCheckBox.IsChecked = TerminalSettings.Default.instantScroll;
+            opacitySlider.Value = TerminalSettings.Default.opacity;
+            alwaysOnTopCheckBox.IsChecked = TerminalSettings.Default.alwaysOnTop;
+
+            this.Opacity = opacitySlider.Value;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
