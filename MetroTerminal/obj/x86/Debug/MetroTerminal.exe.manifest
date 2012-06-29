@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroTerminal.exe" size="499200">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroTerminal.exe" size="500224">
       <assemblyIdentity name="MetroTerminal" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>WqcJxng38D+3azj4f3DJ/148Ni0=</dsig:DigestValue>
+        <dsig:DigestValue>WKx9J8L8FfCgDOuc+PsEjjNzd/E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

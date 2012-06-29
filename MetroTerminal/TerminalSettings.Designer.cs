@@ -170,5 +170,77 @@ namespace MetroTerminal {
                 this["backColorUri"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool alwaysOnTop {
+            get {
+                return ((bool)(this["alwaysOnTop"]));
+            }
+            set {
+                this["alwaysOnTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoUpdate {
+            get {
+                return ((bool)(this["autoUpdate"]));
+            }
+            set {
+                this["autoUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float opacity {
+            get {
+                return ((float)(this["opacity"]));
+            }
+            set {
+                this["opacity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool instantScroll {
+            get {
+                return ((bool)(this["instantScroll"]));
+            }
+            set {
+                this["instantScroll"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool displayUpdateIcon {
+            get {
+                return ((bool)(this["displayUpdateIcon"]));
+            }
+            set {
+                this["displayUpdateIcon"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoInstallNewUpdates {
+            get {
+                return ((bool)(this["autoInstallNewUpdates"]));
+            }
+            set {
+                this["autoInstallNewUpdates"] = value;
+            }
+        }
     }
 }

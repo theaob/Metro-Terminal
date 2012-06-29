@@ -238,5 +238,18 @@ namespace MetroTerminal
             }
             
         }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            fontFamilySelector.ItemsSource = Fonts.SystemFontFamilies;
+            //fontFamilySelector.SelectedIndex = fontFamilySelector.Items.IndexOf(FontFamily.G
+            for(int i = 6; i <= 72; i++)
+            {
+                if((i > 12 && i % 2 == 0 && i < 30) || i <=12 || (i % 12 == 0))
+                fontSizeSelector.Items.Add(i);
+            }
+            fontSizeSelector.Text = TerminalSettings.Default.terminalFontSize.ToString();
+                //TerminalSettings.Default.terminalFontFamily);
+        }
     }
 }
