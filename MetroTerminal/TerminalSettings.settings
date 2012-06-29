@@ -6,7 +6,7 @@
       <Value Profile="(Default)">Black</Value>
     </Setting>
     <Setting Name="terminalFontColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#FF65B5E3</Value>
+      <Value Profile="(Default)">#FF41B1E1</Value>
     </Setting>
     <Setting Name="terminalFontFamily" Type="System.String" Scope="User">
       <Value Profile="(Default)">Sagoe UI</Value>
@@ -44,6 +44,12 @@
     </Setting>
     <Setting Name="parityIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="colorUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml</Value>
+    </Setting>
+    <Setting Name="backColorUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml</Value>
     </Setting>
   </Settings>
 </SettingsFile>

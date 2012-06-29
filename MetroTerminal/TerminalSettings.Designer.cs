@@ -37,7 +37,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF65B5E3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF41B1E1")]
         public string terminalFontColor {
             get {
                 return ((string)(this["terminalFontColor"]));
@@ -144,6 +144,30 @@ namespace MetroTerminal {
             }
             set {
                 this["parityIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml")]
+        public string colorUri {
+            get {
+                return ((string)(this["colorUri"]));
+            }
+            set {
+                this["colorUri"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml")]
+        public string backColorUri {
+            get {
+                return ((string)(this["backColorUri"]));
+            }
+            set {
+                this["backColorUri"] = value;
             }
         }
     }

@@ -11,20 +11,83 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        
-    </Grid>
+    <TabControl>
+        <TabItem Header="Colors">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="80*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Window Color Scheme">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Height="30" Width="30" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF41B1E1" Name="blueRect" Click="blueRect_Click"></Button>
+                        <Button Height="30" Width="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFD53333" Name="redRect" Click="redRect_Click"></Button>
+                        <Button Height="30" Width="30" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF6DD533" Name="greenRect" Click="greenRect_Click"></Button>
+                        <Button Height="30" Width="30" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFC333FF" Name="purpleRect" Click="purpleRect_Click"></Button>
+                        <Button Height="30" Width="30" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFFFAD54" Name="orangeRect" Click="orangeRect_Click"></Button>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Grid.Column="0" Header="Window Base">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Height="30" Width="30" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Name="lightRect" Click="lightRect_Click"></Button>
+                        <Button Height="30" Width="30" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF252525" Name="darkRect" Click="darkRect_Click" Foreground="White"></Button>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Terminal Color" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <WrapPanel Grid.Row="0">
+                        <Label>Background:</Label>
+                        <Button Name="terminalBackButton" Margin="10,2,0,0" Height="20" Width="30" VerticalAlignment="Top"></Button>
+                        </WrapPanel>
+                        <WrapPanel Grid.Row="1">
+                        <Label>Foreground:</Label>
+                        <Button Name="terminalForeButton" Margin="10,2,0,0" Height="20" Width="30"></Button>
+                        </WrapPanel>
+                        <Button Grid.Row="2" Click="Button_Click">Use Scheme Colors</Button>
+                    </Grid>
+                </GroupBox>
+                <Button Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Bottom">Save</Button>
+                <GroupBox Header="Preview" Grid.Row="2" Grid.Column="0">
+                    <ListBox Name="listBoxTest" IsEnabled="True" Focusable="False">
+                        <ListBoxItem Content="This is a" />
+                        <ListBoxItem Content="preview for" />
+                        <ListBoxItem Content="terminal window" />
+                    </ListBox>
+                </GroupBox>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Other">
+
+        </TabItem>
+        <TabItem Header="Update">
+            
+        </TabItem>
+
+    </TabControl>
+    
 </Controls:MetroWindow>

@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="Resources/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -66,7 +66,7 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox >
-        <ProgressBar Grid.Row="1" Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}" Value="100" IsIndeterminate="False" IsEnabled="False" LargeChange="5" SmallChange="1" BorderThickness="0" ClipToBounds="True" Opacity="0.8" Height="5" Foreground="{x:Null}" OpacityMask="Blue"></ProgressBar>
+        <ProgressBar Grid.Row="1" Name="dumpFileProgressBar" Background="{x:Null}" BorderBrush="{x:Null}" Value="100" IsIndeterminate="False" IsEnabled="False" LargeChange="5" SmallChange="1" BorderThickness="0" ClipToBounds="True" Opacity="0.8" Height="5" Foreground="{x:Null}" OpacityMask="#FFFFAD54"></ProgressBar>
         <TabControl Grid.Row="2" HorizontalAlignment="Stretch" Name="tabControl1" VerticalAlignment="Stretch" Padding="0" BorderThickness="0">
             <TabItem Header="COM Port" Name="tabItem1" FontSize="12">
                 <Grid>

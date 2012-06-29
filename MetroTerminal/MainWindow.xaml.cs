@@ -53,6 +53,18 @@ namespace MetroTerminal
             loadBaudRates();
             loadSettings();
             prepareThreads();
+            changeColorScheme();
+        }
+        void changeColorScheme()
+        {
+            var a = new System.Uri(TerminalSettings.Default.colorUri);
+            var b = new System.Uri(TerminalSettings.Default.backColorUri);
+            var c = new ResourceDictionary();
+            var d = new ResourceDictionary();
+            c.Source = b;
+            d.Source = a;
+            AppWindow.Resources.MergedDictionaries[5] = c;
+            AppWindow.Resources.MergedDictionaries[4] = d;
         }
         void prepareThreads()
         {
