@@ -149,7 +149,7 @@ namespace MetroTerminal {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")]
         public string colorUri {
             get {
                 return ((string)(this["colorUri"]));

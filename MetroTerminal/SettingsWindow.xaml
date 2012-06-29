@@ -72,7 +72,7 @@
                         <Button Grid.Row="2" Click="Button_Click">Use Scheme Colors</Button>
                     </Grid>
                 </GroupBox>
-                <Button Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Bottom">Save</Button>
+                <Button Grid.Row="2" Grid.Column="1" Height="30" VerticalAlignment="Bottom" Click="Button_Click_1">Save</Button>
                 <GroupBox Header="Preview" Grid.Row="2" Grid.Column="0">
                     <ListBox Name="listBoxTest" IsEnabled="True" Focusable="False">
                         <ListBoxItem Content="This is a" />

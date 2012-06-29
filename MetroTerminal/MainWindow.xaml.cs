@@ -53,7 +53,6 @@ namespace MetroTerminal
             loadBaudRates();
             loadSettings();
             prepareThreads();
-            changeColorScheme();
         }
         void changeColorScheme()
         {
@@ -136,6 +135,7 @@ namespace MetroTerminal
         }
         private void colorizeAll()
         {
+            changeColorScheme();
             colorizeTerminalBox();
         }
         private void addToList(String text)
@@ -288,6 +288,7 @@ namespace MetroTerminal
         {
             SettingsWindow sw = new SettingsWindow();
             sw.ShowDialog();
+            colorizeAll();
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {

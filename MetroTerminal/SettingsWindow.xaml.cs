@@ -21,10 +21,11 @@ namespace MetroTerminal
     public partial class SettingsWindow : MetroWindow
     {
 
+        String backColorUri = TerminalSettings.Default.colorUri;
+        String baseColorUri = TerminalSettings.Default.backColorUri;
+
         private BrushConverter bc = new BrushConverter();
         private ColorConverter cc = new ColorConverter();
-        private FontFamilyConverter ffc = new FontFamilyConverter();
-        private FontSizeConverter fsc = new FontSizeConverter();
 
         public SettingsWindow()
         {
@@ -45,8 +46,6 @@ namespace MetroTerminal
             //terminalBackPicker.Foreground = listBoxTest.Background;
             //terminalForePicker.Background = listBoxTest.Foreground;
             //terminalForePicker.Foreground = listBoxTest.Foreground;
-            listBoxTest.FontFamily = (FontFamily) ffc.ConvertFrom(TerminalSettings.Default.terminalFontFamily);
-            listBoxTest.FontSize = TerminalSettings.Default.terminalFontSize;
         }
         private void loadColorFromSettings()
         {
@@ -54,6 +53,13 @@ namespace MetroTerminal
             color = color.Substring(color.LastIndexOf('/') + 1);
             color = color.Substring(0, color.IndexOf('.'));
             changeColor(color);
+
+            color = TerminalSettings.Default.backColorUri;
+            color = color.Substring(color.LastIndexOf('/') + 1);
+            color = color.Substring(0, color.IndexOf('.'));
+            color = color.Substring(4);
+            changeBackColor(color);
+
         }
         private void buttonizer()
         {
@@ -106,6 +112,7 @@ namespace MetroTerminal
         }
         private void changeColor(String color)
         {
+            backColorUri = "pack://application:,,,/MahApps.Metro;component/Styles/Accents/" + color + ".xaml";
             var a = new System.Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/"+color+".xaml");
             var d = new ResourceDictionary();
             d.Source = a;
@@ -114,6 +121,7 @@ namespace MetroTerminal
         }
         private void changeBackColor(String shade)
         {
+            baseColorUri = "pack://application:,,,/MahApps.Metro;component/Styles/Accents/Base" + shade + ".xaml";
             var a = new System.Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Base" + shade + ".xaml");
             var d = new ResourceDictionary();
             d.Source = a;
@@ -198,6 +206,37 @@ namespace MetroTerminal
         {
             var mediaColor = cc.ConvertFrom(terminalBackPicker.SelectedColor.ToString());
             listBoxTest.Background = (System.Windows.Media.Brush)bc.ConvertFromString(mediaColor.ToString());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult a = System.Windows.MessageBox.Show("Your settings will be overwritten!", "Are you sure?", MessageBoxButton.YesNoCancel);
+            switch (a)
+            {
+                case MessageBoxResult.Yes:
+                    {
+                        TerminalSettings.Default.backColorUri = baseColorUri;
+                        TerminalSettings.Default.colorUri = backColorUri;
+                        TerminalSettings.Default.terminalBackColor = listBoxTest.Background.ToString();
+                        TerminalSettings.Default.terminalFontColor = listBoxTest.Foreground.ToString();
+
+
+                        TerminalSettings.Default.Save();
+
+                        this.Close();
+                        return;
+                    }
+                case MessageBoxResult.No:
+                    {
+                        this.Close();
+                        return;
+                    }
+                case MessageBoxResult.Cancel:
+                    {
+                        return;
+                    }
+            }
+            
         }
     }
 }

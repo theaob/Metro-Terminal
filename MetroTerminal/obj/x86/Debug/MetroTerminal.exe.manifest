@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroTerminal.exe" size="497152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroTerminal.exe" size="497664">
       <assemblyIdentity name="MetroTerminal" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>xAyrTQt71W1pLyD7PRK5dBVPSfg=</dsig:DigestValue>
+        <dsig:DigestValue>w/loJX/tL+jDxABiq95jOC+Pi64=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -89,13 +89,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="MetroTerminal.exe.config" size="3107">
+  <file name="MetroTerminal.exe.config" size="3106">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>qzZ3+GAdJteQld1xwAqjUpOkghY=</dsig:DigestValue>
+      <dsig:DigestValue>D1E2NjzNinb5AHvttikaFrdUKN8=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
