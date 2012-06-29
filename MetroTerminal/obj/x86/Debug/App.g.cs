@@ -59,6 +59,8 @@ namespace MetroTerminal {
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public static void Main() {
+            SplashScreen splashScreen = new SplashScreen("splashscreen1.png");
+            splashScreen.Show(true);
             MetroTerminal.App app = new MetroTerminal.App();
             app.InitializeComponent();
             app.Run();

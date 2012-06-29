@@ -35,7 +35,9 @@ namespace MetroTerminal
         private void terminalColorize()
         {
             listBoxTest.Background = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalBackColor);
+            terminalBackButton.Background = listBoxTest.Background;
             listBoxTest.Foreground = (Brush)bc.ConvertFrom(TerminalSettings.Default.terminalFontColor);
+            terminalForeButton.Background = listBoxTest.Foreground;
             listBoxTest.FontFamily = (FontFamily) ffc.ConvertFrom(TerminalSettings.Default.terminalFontFamily);
             listBoxTest.FontSize = TerminalSettings.Default.terminalFontSize;
         }
@@ -174,6 +176,14 @@ namespace MetroTerminal
                 code = purpleRect.Background;
             }
             listBoxTest.Foreground = code;
+            listBoxTest.Background = Brushes.Black;
+            terminalBackButton.Background = Brushes.Black;
+            terminalForeButton.Background = listBoxTest.Foreground;
+        }
+
+        private void terminalBackButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

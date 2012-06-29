@@ -62,7 +62,7 @@
                         </Grid.RowDefinitions>
                         <WrapPanel Grid.Row="0">
                         <Label>Background:</Label>
-                        <Button Name="terminalBackButton" Margin="10,2,0,0" Height="20" Width="30" VerticalAlignment="Top"></Button>
+                        <Button Name="terminalBackButton" Margin="10,2,0,0" Height="20" Width="30" VerticalAlignment="Top" Click="terminalBackButton_Click"></Button>
                         </WrapPanel>
                         <WrapPanel Grid.Row="1">
                         <Label>Foreground:</Label>
