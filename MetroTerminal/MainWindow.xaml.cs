@@ -140,10 +140,27 @@ namespace MetroTerminal
                 }
             }
         }
+        private void loadOpacity()
+        {
+            this.Opacity = TerminalSettings.Default.opacity;
+        }
         private void colorizeAll()
         {
             changeColorScheme();
             colorizeTerminalBox();
+            loadOpacity();
+            alwaysOnTop();
+        }
+        private void alwaysOnTop()
+        {
+            if (TerminalSettings.Default.alwaysOnTop)
+            {
+                this.Topmost = true;
+            }
+            else
+            {
+                this.Topmost = false;
+            }
         }
         private void addToList(String text)
         {
@@ -154,8 +171,6 @@ namespace MetroTerminal
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 terminalTextBox.ScrollIntoView(terminalTextBox.Items[terminalTextBox.Items.Count - 1]);
-                //terminalTextBox.Selected
-                //terminalTextBox.Scr
             }), System.Windows.Threading.DispatcherPriority.Normal, null);
         }
         private void addToListSecure(String text)
@@ -305,6 +320,7 @@ namespace MetroTerminal
         {
             SettingsWindow sw = new SettingsWindow();
             sw.ShowDialog();
+            //sw.ShowDialog();
             colorizeAll();
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -504,7 +520,7 @@ namespace MetroTerminal
                     Button_Click_4(sender, e);
                 }
                 int delay = 0;
-                if (!(delayTextBox.Text == "Delay" || delayTextBox.Text == "0"))
+                if (!(delayTextBox.Text == "" || delayTextBox.Text == "0"))
                 {
                     if (!IsItAPositiveNumber(delayTextBox.Text, out delay))
                     {
@@ -896,7 +912,7 @@ namespace MetroTerminal
             manualEofN.IsEnabled = true;
             manualEofR.IsEnabled = true;
         }
-        private void delayTextBox_GotFocus(object sender, RoutedEventArgs e)
+        /*private void delayTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (delayTextBox.Text == "Delay")
             {
@@ -909,8 +925,8 @@ namespace MetroTerminal
             {
                 delayTextBox.Text = "Delay";
             }
-        }
-        private void manualDataTextBox_GotFocus(object sender, RoutedEventArgs e)
+        }*/
+        /*private void manualDataTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (manualDataTextBox.Text == "Enter Data Here")
             {
@@ -923,27 +939,27 @@ namespace MetroTerminal
             {
                 manualDataTextBox.Text = "Enter Data Here";
             }
-        }
+        }*/
         private void manualRepeat_LostFocus(object sender, RoutedEventArgs e)
         {
             if (String.IsNullOrWhiteSpace(manualRepeat.Text) || String.IsNullOrEmpty(manualRepeat.Text))
             {
                 manualRepeatCount = 1;
-                manualRepeat.Text = "Repeat";
+                manualRepeat.Text = "";
             }
             else if (!IsItAPositiveNumber(manualRepeat.Text, out manualRepeatCount))
             {
                 manualRepeatCount = 1;
-                manualRepeat.Text = "Repeat";
+                manualRepeat.Text = "";
             }
         }
-        private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
+        /*private void manualRepeat_GotFocus(object sender, RoutedEventArgs e)
         {
             if (manualRepeat.Text == "Repeat")
             {
                 manualRepeat.Text = "";
             }
-        }
+        }*/
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             newPortGroupBox.Visibility = System.Windows.Visibility.Visible;
@@ -1145,6 +1161,11 @@ namespace MetroTerminal
                 receiveAsGroupBox.IsEnabled = false;
                 newPortGroupBox.IsEnabled = false;
             }
+        }
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Updater up = new Updater();
+            up.ShowDialog();
         }
     }
 }

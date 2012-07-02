@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\App.xaml
-31792187522
+42137485693
 
-7360002739
+8-2071302971
 16-832320508
-MainWindow.xaml;Resources\Icons.xaml;SettingsWindow.xaml;
+MainWindow.xaml;Resources\Icons.xaml;SettingsWindow.xaml;Updater.xaml;
 splashscreen1.png
 False
 

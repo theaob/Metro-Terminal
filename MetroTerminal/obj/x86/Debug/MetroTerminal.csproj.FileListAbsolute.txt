@@ -22,3 +22,5 @@ C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTermi
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.exe
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\MetroTerminal.pdb
 C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\bin\Debug\WPFToolkit.Extended.dll
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\Updater.baml
+C:\Users\Test Pc1\Documents\Visual Studio 2010\Projects\MetroTerminal\MetroTerminal\obj\x86\Debug\Updater.g.cs
