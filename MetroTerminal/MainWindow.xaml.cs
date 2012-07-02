@@ -40,6 +40,9 @@ namespace MetroTerminal
         private LinkedList<String> fileLines = new LinkedList<string>();
         private LinkedList<byte[]> byteArrayLines = new LinkedList<byte[]>();
 
+        //true: instant; false: delayed
+        private bool scroll = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,6 +56,10 @@ namespace MetroTerminal
             loadBaudRates();
             loadSettings();
             prepareThreads();
+        }
+        private void loadScrollOption()
+        {
+            scroll = TerminalSettings.Default.instantScroll;
         }
         void changeColorScheme()
         {
@@ -142,6 +149,15 @@ namespace MetroTerminal
         {
             terminalTextBox.Items.Add(DateTime.Now.ToString("HH:mm:ss:fff", null) + " | " + text);
         }
+        private void scrollToEnd()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                terminalTextBox.ScrollIntoView(terminalTextBox.Items[terminalTextBox.Items.Count - 1]);
+                //terminalTextBox.Selected
+                //terminalTextBox.Scr
+            }), System.Windows.Threading.DispatcherPriority.Normal, null);
+        }
         private void addToListSecure(String text)
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -189,6 +205,7 @@ namespace MetroTerminal
             dataBitsComboBox.SelectedIndex = TerminalSettings.Default.dataBitsIndex;
             parityComboBox.SelectedIndex = TerminalSettings.Default.parityIndex;
             stopBitsComboBox.SelectedIndex = TerminalSettings.Default.stopBitsIndex;
+            loadScrollOption();
         }
         private void savePortSettings(int baudRate, int baudRateIndex, int stopBitIndex, int parityIndex, int dataBitIndex)
         {
@@ -614,6 +631,10 @@ namespace MetroTerminal
                         fileDumpWorker.ReportProgress(progress++);
                         stopwatch.Reset();
                         stopwatch.Start();
+                        if (scroll)
+                        {
+                            scrollToEnd();
+                        }
                         break;
                     }
                 }
@@ -639,6 +660,10 @@ namespace MetroTerminal
                     port.Write(sendThis);
                     addToListSecure(sendThis.Trim());
                     manualSendWorker.ReportProgress(progress++);
+                    if (scroll)
+                    {
+                        scrollToEnd();
+                    }
                 }
             }
             else
@@ -660,6 +685,10 @@ namespace MetroTerminal
                     port.Write(sendThis, 0, sendThis.Length);
                     addToListSecure(toSend);
                     manualSendWorker.ReportProgress(progress++);
+                    if (scroll)
+                    {
+                        scrollToEnd();
+                    }
                 }
             }
 
@@ -678,6 +707,7 @@ namespace MetroTerminal
             manualRepeat.IsEnabled = true;
             manualSendASCII.IsEnabled = true;
             manualSendString.IsEnabled = true;
+            scrollToEnd();
         }
         void fileDumpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -689,6 +719,7 @@ namespace MetroTerminal
             sendAsByte.IsEnabled = true;
             sendAsString.IsEnabled = true;
             dumpButton.Content = "Send";
+            scrollToEnd();
         }
         void receiveWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -710,6 +741,10 @@ namespace MetroTerminal
                             {
                                 read = portReceive.ReadLine();
                                 addToListSecure(read);
+                                if (scroll)
+                                {
+                                    scrollToEnd();
+                                }
                             }catch(TimeoutException)
                             {
                             }
@@ -730,6 +765,10 @@ namespace MetroTerminal
                             {
                                 read = (char)portReceive.ReadChar();
                                 addToListSecure(read.ToString());
+                                if (scroll)
+                                {
+                                    scrollToEnd();
+                                }
                             }
                             catch (TimeoutException)
                             {
@@ -750,6 +789,10 @@ namespace MetroTerminal
                             {
                                 read = (byte) portReceive.ReadByte();
                                 addToListSecure(read.ToString());
+                                if (scroll)
+                                {
+                                    scrollToEnd();
+                                }
                             }
                             catch (TimeoutException)
                             {
@@ -775,6 +818,10 @@ namespace MetroTerminal
                                     readS += i.ToString();
                                 }
                                 addToListSecure(readS);
+                                if (scroll)
+                                {
+                                    scrollToEnd();
+                                }
                             }
                             catch (TimeoutException)
                             {
