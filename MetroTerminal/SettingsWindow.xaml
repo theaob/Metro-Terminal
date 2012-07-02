@@ -97,7 +97,6 @@
                     <StackPanel>
                         <CheckBox Margin="5,5,5,5" Name="alwaysOnTopCheckBox">Always on Top</CheckBox>
                         <CheckBox Margin="5,0,5,5" Name="instantScrollCheckBox">Instant Scroll</CheckBox>
-                        <CheckBox Margin="5,0,5,5" Name="autoUpdateCheckBox">Auto Update</CheckBox>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Grid.Row="0" Grid.Column="1" Header="Opacity">
@@ -144,17 +143,22 @@
                 <Button Height="23" Grid.Column="1" Grid.Row="3" Margin="10,0,10,0">Check For update</Button>
                 <GroupBox Grid.ColumnSpan="2" Grid.Column="0" Grid.RowSpan="3" Header="Update Options" Margin="2,2,2,0">
                     <StackPanel>
-                        <CheckBox Margin="10,5,0,0">
+                        <CheckBox Margin="10,5,0,0" Name="showIconIfUpdate">
                             <TextBlock TextWrapping="Wrap"  
                             Text="Display new update available icon"/>
                         </CheckBox>
-                        <CheckBox Margin="10,5,0,0">
+                        <CheckBox Margin="10,5,0,0" Name="autoCheckForUpdates">
+                            <TextBlock TextWrapping="Wrap"  
+                            Text="Automatically check for updates" />
+                        </CheckBox>
+                        <CheckBox Margin="10,5,0,0" Name="autoInstallUpdate">
                             <TextBlock TextWrapping="Wrap"  
                             Text="Automatically install new updates" />
                         </CheckBox>
+                        <Button Name="saveUpdateSettingButton" Content="Save SETTINGS" HorizontalAlignment="Right" Margin="0,50,5,0" Click="saveUpdateSettingButton_Click"></Button>
                     </StackPanel>
                 </GroupBox>
-                <Button Height="23" Grid.Row="3" Grid.Column="0" Margin="10,0,10,0">Support</Button>
+                <Button Height="23" Grid.Row="3" Grid.Column="0" Margin="10,0,10,0" Click="Button_Click_3">Support</Button>
             </Grid>
         </TabItem>
 

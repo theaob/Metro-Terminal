@@ -40,6 +40,8 @@ namespace MetroTerminal
         private LinkedList<String> fileLines = new LinkedList<string>();
         private LinkedList<byte[]> byteArrayLines = new LinkedList<byte[]>();
 
+
+        private Updater up = new Updater();
         //true: instant; false: delayed
         private bool scroll = false;
 
@@ -56,6 +58,24 @@ namespace MetroTerminal
             loadBaudRates();
             loadSettings();
             prepareThreads();
+            if (TerminalSettings.Default.autoUpdate)
+            {
+                if (checkForUpdate())
+                {
+                    if (TerminalSettings.Default.displayUpdateIcon)
+                    {
+                        showUpdateButton();
+                    }
+                    if (TerminalSettings.Default.autoInstallNewUpdates)
+                    {
+                        up.ShowDialog();
+                    }
+                }
+            }
+        }
+        private void showUpdateButton()
+        {
+            update_button.Visibility = System.Windows.Visibility.Visible;
         }
         private void loadScrollOption()
         {
@@ -1167,5 +1187,10 @@ namespace MetroTerminal
             Updater up = new Updater();
             up.ShowDialog();
         }
+        private bool checkForUpdate()
+        {
+            return Updater.updateAble(version);
+        }
+    
     }
 }

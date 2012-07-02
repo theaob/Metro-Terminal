@@ -28,7 +28,7 @@ namespace MetroTerminal
         {
 
 
-
+            return true;
         }
         private void colorize()
         {

@@ -50,7 +50,7 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
-            <Button Visibility="Visible" Click="Button_Click_3">
+            <Button Visibility="Collapsed" Click="Button_Click_3" Name="update_button">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="14">
                         <Rectangle.Resources>

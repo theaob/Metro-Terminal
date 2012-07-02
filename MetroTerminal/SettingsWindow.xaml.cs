@@ -274,12 +274,16 @@ namespace MetroTerminal
             fontSizeSelector.Text = TerminalSettings.Default.terminalFontSize.ToString();
                 //TerminalSettings.Default.terminalFontFamily);
 
-            autoUpdateCheckBox.IsChecked = TerminalSettings.Default.autoUpdate;
             instantScrollCheckBox.IsChecked = TerminalSettings.Default.instantScroll;
             opacitySlider.Value = TerminalSettings.Default.opacity;
             alwaysOnTopCheckBox.IsChecked = TerminalSettings.Default.alwaysOnTop;
 
             this.Opacity = opacitySlider.Value;
+
+            showIconIfUpdate.IsChecked = TerminalSettings.Default.displayUpdateIcon;
+            autoCheckForUpdates.IsChecked = TerminalSettings.Default.autoUpdate;
+            autoInstallUpdate.IsChecked = TerminalSettings.Default.autoInstallNewUpdates;
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -298,7 +302,6 @@ namespace MetroTerminal
                             TerminalSettings.Default.opacity = opacitySlider.Value;
                             TerminalSettings.Default.instantScroll = (instantScrollCheckBox.IsChecked == true);
                             TerminalSettings.Default.alwaysOnTop = (alwaysOnTopCheckBox.IsChecked == true);
-                            TerminalSettings.Default.autoUpdate = (autoUpdateCheckBox.IsChecked == true);
 
                             TerminalSettings.Default.Save();
                         }
@@ -334,6 +337,38 @@ namespace MetroTerminal
         private void opacitySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             this.Opacity = opacitySlider.Value;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://onurbaykal.com/Metro-Terminal/");
+        }
+
+        private void saveUpdateSettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult r = System.Windows.MessageBox.Show("Are you sure?", "Save Settings", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            switch (r)
+            {
+                case MessageBoxResult.Yes:
+                    {
+                        TerminalSettings.Default.displayUpdateIcon = (showIconIfUpdate.IsChecked == true);
+                        TerminalSettings.Default.autoUpdate = (autoCheckForUpdates.IsChecked == true);
+                        TerminalSettings.Default.autoInstallNewUpdates = (autoInstallUpdate.IsChecked == true);
+
+                        TerminalSettings.Default.Save();
+                        this.Close();
+                        return;
+                    }
+                case MessageBoxResult.No:
+                    {
+                        this.Close();
+                        return;
+                    }
+                case MessageBoxResult.Cancel:
+                    {
+                        return;
+                    }
+            }   
         }
     }
 }
